@@ -11,6 +11,7 @@ import { BetsHistoryComponent } from './bets-history/bets-history.component';
 import { BetsCurrentComponent } from './bets-current/bets-current.component';
 import { BetComponent } from './bet/bet.component';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { HttpClientModule }    from '@angular/common/http';
 
 @NgModule({
 	declarations: [
@@ -30,6 +31,7 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 			accessToken:
 				'pk.eyJ1Ijoia2FtaWw2NjYiLCJhIjoiY2pvdmZlcWx1MWlrMzNvczBndzZvdXlmYiJ9.B0Vkyr5JnArEy0fyHTqVsg',
 		}),
+		HttpClientModule
 	],
 	providers: [],
 	bootstrap: [AppComponent],
