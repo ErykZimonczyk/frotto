@@ -11,5 +11,10 @@
 	<!-- [maxBounds]="bounds" -->
 </mgl-map>
 <img class="marker" src="/assets/pin.png" />
+<div class="marker-label">{{distanceFactor}}%</div>
+<div class="location_icon" (click)="clickCenterMap()">
+  <img class="marker" src="/assets/gps-fixed-indicator.svg" />
+</div>
+
 <button class="make_bet-button" (click)="makeBet()"></button>
 </div>

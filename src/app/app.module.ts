@@ -12,6 +12,7 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { BetBuyComponent } from './bet-buy/bet-buy.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
+import { MapGotoLocationComponent } from './map-goto-location/map-goto-location.component';
 
 @NgModule({
 	declarations: [
@@ -24,6 +25,7 @@ import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 		BetsCurrentComponent,
 		BetBuyComponent,
 		PaymentPopupComponent,
+		MapGotoLocationComponent,
 	],
 	imports: [
 		BrowserModule,
