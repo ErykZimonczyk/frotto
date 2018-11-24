@@ -3,6 +3,7 @@ export class Bet {
 		lng: number;
 		lat: number;
 	};
+	public friendBetId: string;
 	public distanceFactor: number;
 	public area: 1 | 0;
 	public type: 1 | 0;
@@ -10,7 +11,7 @@ export class Bet {
 	constructor(lat, lng, factor, area, type) {
 		this.position = {
 			lat,
-			lng
+			lng,
 		};
 
 		this.distanceFactor = factor;
@@ -24,5 +25,26 @@ export class Bet {
 			case 0:
 				return 'mazowiecki';
 		}
+	}
+
+	public getLat() {
+		return this.position.lat.toFixed(2);
+	}
+
+	public getLng() {
+		return this.position.lng.toFixed(2);
+	}
+
+	public mapToApi() {
+		return {
+			userId: 1,
+			position: {
+				lon: this.position.lng,
+				lat: this.position.lat,
+			},
+			friendBetId: this.friendBetId,
+			distanceFactor: this.distanceFactor,
+			area: this.area,
+		};
 	}
 }

@@ -22,6 +22,7 @@ export class MapComponent implements OnInit {
 		[24.15, 54.83555569], // Northeast coordinates
 	];
 	zoom = 10;
+	refId;
 
 	betsUrl = 'https://srotto.herokuapp.com/bets';
 
@@ -36,34 +37,35 @@ export class MapComponent implements OnInit {
 		private http: HttpClient,
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
-		@Inject(BetStoreService) private betStoreService: BetStoreService,
-
+		@Inject(BetStoreService) private betStoreService: BetStoreService
 	) {}
 	/* tslint:disable:name */
 	async ngOnInit() {
 		this.activatedRoute.queryParams.subscribe(params => {
 			this.back = params['back'];
+			this.refId = params['refId'];
 		});
-		this.bet = this.betStoreService.getCurrentBet() || new Bet(
-			this.center[0],
-			this.center[1],
-			1,
-			0,
-			0);
+		this.bet =
+			this.betStoreService.getCurrentBet() ||
+			new Bet(this.center[0], this.center[1], 1, 0, 0);
+
+		if (this.refId) {
+			this.bet.friendBetId = this.refId;
+		}
 		const data: any = await this.http.get(this.betsUrl).toPromise();
 		this.geoBets.features = data.bets.map(bet => {
 			const { lat, lon } = bet.position;
 			return {
-			type: 'Feature',
-			geometry: {
-				type: 'circle',
-				coordinates: [lon, lat],
-			},
-			properties: {
-				rangeFactor: bet.rangeFactor
-			}
-
-		}})
+				type: 'Feature',
+				geometry: {
+					type: 'circle',
+					coordinates: [lon, lat],
+				},
+				properties: {
+					rangeFactor: bet.rangeFactor,
+				},
+			};
+		});
 		this.progress = data.progress;
 	}
 
