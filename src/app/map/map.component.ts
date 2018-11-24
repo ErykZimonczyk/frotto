@@ -35,6 +35,9 @@ export class MapComponent implements OnInit {
 	) {}
 	/* tslint:disable:name */
 	async ngOnInit() {
+		this.activatedRoute.queryParams.subscribe(params => {
+			this.back = params['back'];
+		});
 		const data: any = await this.http.get(this.betsUrl).toPromise();
 		this.geoBets.features = data.bets.map(bet => {
 			const { lat, lon } = bet.position;
@@ -49,10 +52,6 @@ export class MapComponent implements OnInit {
 		});
 		this.progress = data.progress;
 		console.log(data, this.geoBets);
-
-		this.activatedRoute.queryParams.subscribe(params => {
-			this.back = params['back'];
-		});
 	}
 
 	makeBet() {

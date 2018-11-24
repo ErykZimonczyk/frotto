@@ -36,10 +36,61 @@
 	<div class="payment">
 		<span class="payment-info"
 			>Metoda płatności:
-			<u (click)="changePaymentMethod = true">karta płatnicza</u>
+			<u (click)="showPaymentMethod = true">{{
+				paymentOptionText[paymentOption]
+			}}</u>
 		</span>
 		<div class="action-button" (click)="pay()">zapłać</div>
 	</div>
 </div>
 
-<app-payment-popup [show]="showPaymentMethod"></app-payment-popup>
+<div
+	class="overlay"
+	(click)="showPaymentMethod = false"
+	*ngIf="showPaymentMethod"
+>
+	<div class="popup">
+		<h2>Zmień metodę płatności</h2>
+		<div class="grid">
+			<div
+				class="card active"
+				(click)="paymentOption = 0"
+				[ngClass]="{ active: paymentOption == 0 }"
+			>
+				<img src="/assets/credit-card.png" alt="" />
+			</div>
+			<div
+				class="card"
+				(click)="paymentOption = 1"
+				[ngClass]="{ active: paymentOption == 1 }"
+			>
+				<img src="/assets/logo.png" alt="" />
+			</div>
+			<div
+				class="card"
+				(click)="paymentOption = 2"
+				[ngClass]="{ active: paymentOption == 2 }"
+			>
+				<img src="/assets/paypal-logo.png" alt="" />
+			</div>
+			<div
+				class="card"
+				(click)="paymentOption = 3"
+				[ngClass]="{ active: paymentOption == 3 }"
+			>
+				<img src="/assets/wallet.png" alt="" />
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="overlay" *ngIf="paid">
+	<div class="popup">
+		<h2>Weryfikacja płatności</h2>
+		<div *ngIf="loading" class="lds-dual-ring"></div>
+		<img *ngIf="!loading" class="check" src="/assets/check.png" alt="" />
+		<div *ngIf="!loading" class="action-button" (click)="back()">
+			zamknij
+		</div>
+	</div>
+</div>
