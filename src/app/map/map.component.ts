@@ -16,7 +16,7 @@ export class MapComponent implements OnInit {
 		[14.166667, 49.0], // Southwest coordinates
 		[24.15, 54.83555569], // Northeast coordinates
 	];
-	zoom = 12;
+	zoom = 10;
 
 	betsUrl = 'https://srotto.herokuapp.com/bets';
 
@@ -37,14 +37,15 @@ export class MapComponent implements OnInit {
 			return {
 			type: 'Feature',
 			geometry: {
-				type: 'Point',
+				type: 'circle',
 				coordinates: [lon, lat],
+			},
+			properties: {
 				rangeFactor: bet.rangeFactor
 			}
 
 		}})
 		this.progress = data.progress;
-		console.log(data, this.geoBets)
 	}
 
 	makeBet() {
@@ -55,7 +56,6 @@ export class MapComponent implements OnInit {
 
 	onMapLoad($event) {
 		this.map = $event;
-		console.log(this.map);
 		this.map.addSource('bets',
 		{
 			type: 'geojson',
@@ -104,15 +104,16 @@ export class MapComponent implements OnInit {
 		});
 
 		this.map.addLayer({
-			id: "unclustered-point",
-			type: "circle",
-			source: "bets",
-			filter: ["!", ["has", "point_count"]],
+			id: 'unclustered-point',
+			type: 'circle',
+			source: 'bets',
+			filter: ['!', ['has', 'point_count']],
 			paint: {
-				"circle-color": "#11b4da",
-				"circle-radius": 4,
-				"circle-stroke-width": 1,
-				"circle-stroke-color": "#fff"
+				'circle-color': '#11b4da',
+				'circle-radius':['get', 'rangeFactor' ],
+				'circle-stroke-width': 1,
+				'circle-stroke-color': '#fff',
+				'circle-opacity': 0.8
 			}
 		});
 	}

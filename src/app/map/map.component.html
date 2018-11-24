@@ -6,11 +6,10 @@
 
 		[dragRotate]="false"
 		[touchZoomRotate]="false"
-		(click)="makeBet()"
 		(load)="onMapLoad($event)"
 	>
 	<!-- [maxBounds]="bounds" -->
 </mgl-map>
 <img class="marker" src="/assets/pin.png" />
-{{center}}
+<button class="make_bet-button" (click)="makeBet()"></button>
 </div>
