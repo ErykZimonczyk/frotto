@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Map } from 'mapbox-gl';
+import { HttpClient } from '@angular/common/http';
+import { FeatureCollection } from 'geojson';
 
 @Component({
 	selector: 'app-map',
@@ -9,33 +12,115 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class MapComponent implements OnInit {
 	public back: boolean;
 
+	map: Map;
+
+	center = [21.003, 52.291];
+	bounds = [
+		[14.166667, 49.0], // Southwest coordinates
+		[24.15, 54.83555569], // Northeast coordinates
+	];
+	zoom = 12;
+
+	betsUrl = 'https://srotto.herokuapp.com/bets';
+
+	progress;
+	geoBets: FeatureCollection = {
+		type: 'FeatureCollection',
+		features: [],
+	};
+
 	constructor(
-		private router: Router,
+		private http: HttpClient,
 		private activatedRoute: ActivatedRoute
 	) {}
 	/* tslint:disable:name */
-	ngOnInit() {
+	async ngOnInit() {
+		const data: any = await this.http.get(this.betsUrl).toPromise();
+		this.geoBets.features = data.bets.map(bet => {
+			const { lat, lon } = bet.position;
+			return {
+				type: 'Feature',
+				geometry: {
+					type: 'Point',
+					coordinates: [lon, lat],
+					rangeFactor: bet.rangeFactor,
+				},
+			};
+		});
+		this.progress = data.progress;
+		console.log(data, this.geoBets);
+
 		this.activatedRoute.queryParams.subscribe(params => {
 			this.back = params['back'];
 		});
-		// const bounds = [
-		// 	[14.166667, 49.0], // Southwest coordinates
-		// 	[24.15, 54.83555569], // Northeast coordinates
-		// ];
-		// const map = new mapboxgl.Map({
-		// 	container: 'map',
-		// 	style: 'mapbox://styles/mapbox/light-v9',
-		// 	center: [21.003, 52.291],
-		// 	zoom: 12,
-		// 	maxBounds: bounds,
-		// });
-		// // disable map rotation using right click + drag
-		// map.dragRotate.disable();
-		// // disable map rotation using touch rotation gesture
-		// map.touchZoomRotate.disableRotation();
 	}
 
-	public buy() {
-		this.router.navigate(['/bet']);
+	makeBet() {
+		if (this.map) {
+			console.log(this.map.getCenter());
+		}
+	}
+
+	onMapLoad($event) {
+		this.map = $event;
+		console.log(this.map);
+		this.map.addSource('bets', {
+			type: 'geojson',
+			data: this.geoBets,
+			cluster: true,
+			clusterMaxZoom: 12,
+		});
+
+		this.map.addLayer({
+			id: 'clusters',
+			type: 'circle',
+			source: 'bets',
+			filter: ['has', 'point_count'],
+			paint: {
+				'circle-color': [
+					'step',
+					['get', 'point_count'],
+					'#51bbd6',
+					100,
+					'#f1f075',
+					750,
+					'#f28cb1',
+				],
+				'circle-radius': [
+					'step',
+					['get', 'point_count'],
+					20,
+					100,
+					30,
+					750,
+					40,
+				],
+			},
+		});
+
+		this.map.addLayer({
+			id: 'cluster-count',
+			type: 'symbol',
+			source: 'bets',
+			filter: ['has', 'point_count'],
+			layout: {
+				'text-field': '{point_count_abbreviated}',
+				'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+				'text-size': 12,
+			},
+		});
+
+		this.map.addLayer({
+			id: 'unclustered-point',
+			type: 'circle',
+			source: 'bets',
+			filter: ['!', ['has', 'point_count']],
+			paint: {
+				'circle-color': '#11b4da',
+				'circle-radius': 4,
+				'circle-stroke-width': 1,
+				'circle-stroke-color': '#fff',
+			},
+		});
 	}
 }

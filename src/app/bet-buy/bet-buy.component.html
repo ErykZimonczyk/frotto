@@ -29,5 +29,11 @@
 			>{{ bet.distanceFactor * maxPrize[bet.area] }} zł</span
 		>
 	</div>
-	<div class="payment">Wybrana metoda: karta płatnicza</div>
+	<div class="payment">
+		<span class="payment-info"
+			>Wybrana metoda: karta płatnicza
+			<button (click)="openPaymentPopup()">zmień</button></span
+		>
+		<button class="action-button" (click)="pay()">zapłać</button>
+	</div>
 </div>
