@@ -1,4 +1,9 @@
 <div class="wrapper">
-	<div id="map"></div>
+	<mgl-map
+		[style]="'mapbox://styles/mapbox/streets-v9'"
+		[zoom]="[9]"
+		[center]="[-74.5, 40]"
+	>
+	</mgl-map>
 	<img class="marker" src="/assets/pin.png" />
 </div>

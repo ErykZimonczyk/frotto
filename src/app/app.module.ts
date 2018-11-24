@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { BetsHistoryComponent } from './bets-history/bets-history.component';
 import { BetsCurrentComponent } from './bets-current/bets-current.component';
 import { BetComponent } from './bet/bet.component';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 
 @NgModule({
 	declarations: [
@@ -22,7 +23,14 @@ import { BetComponent } from './bet/bet.component';
 		BetsCurrentComponent,
 		BetComponent,
 	],
-	imports: [BrowserModule, AppRoutingModule],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		NgxMapboxGLModule.withConfig({
+			accessToken:
+				'pk.eyJ1Ijoia2FtaWw2NjYiLCJhIjoiY2pvdmZlcWx1MWlrMzNvczBndzZvdXlmYiJ9.B0Vkyr5JnArEy0fyHTqVsg',
+		}),
+	],
 	providers: [],
 	bootstrap: [AppComponent],
 	exports: [
