@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SplashComponent } from './splash/splash.component';
 import { MapComponent } from './map/map.component';
 import { BetBuyComponent } from './bet-buy/bet-buy.component';
 

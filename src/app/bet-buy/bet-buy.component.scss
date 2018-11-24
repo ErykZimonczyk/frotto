@@ -5,7 +5,7 @@ $color-gray-dark: #4f4d4b;
 	padding: 5px 15px 15px;
 	margin: 30px 0 20px;
 	box-shadow: 1px 1px 9px #0000004d;
-
+	position: relative;
 	min-height: 80vh;
 
 	h2 {
@@ -85,7 +85,7 @@ $color-gray-dark: #4f4d4b;
 	color: #4f4d4b;
 	position: absolute;
 	width: calc(100% - 20px);
-	bottom: 30px;
+	bottom: 0;
 
 	.payment-info {
 		vertical-align: middle;
@@ -109,10 +109,109 @@ $color-gray-dark: #4f4d4b;
 		font-weight: 600;
 		text-align: center;
 		text-transform: uppercase;
+	}
+}
 
-		.currency {
-			font-size: 11pt;
-			vertical-align: middle;
+.overlay {
+	position: fixed;
+	background: rgba(0, 0, 0, 0.5);
+	height: 100vh;
+	width: 100vw;
+	top: 0;
+	left: 0;
+
+	.popup {
+		height: 400px;
+		width: 80%;
+		margin: 100px auto 0;
+		background: white;
+		box-shadow: 1px 1px 9px #0000004d;
+		text-align: center;
+
+		.action-button {
+			color: #444;
+			font-family: 'Hind Siliguri', sans-serif;
+			font-size: 14pt;
+			padding: 10px 20px;
+			border-radius: 20px;
+			background: #f7c162;
+			box-shadow: 1px 1px 9px #0000004d;
+			z-index: 2;
+			display: block;
+			min-width: 200px;
+			margin: 10px auto;
+			max-width: 250px;
+			width: 100%;
+			font-weight: 600;
+			text-align: center;
+			text-transform: uppercase;
+		}
+
+		h2 {
+			color: $color-gray-dark;
+			font-size: 14pt;
+			text-align: center;
+			font-family: 'Hind Siliguri', sans-serif;
+			font-weight: 100;
+			border-bottom: 1px solid #f7c162;
+			padding: 20px 0;
+			margin: 0 10px 20px;
+		}
+
+		.check {
+			width: 200px;
+			margin: 10px auto 10px;
+		}
+
+		.lds-dual-ring {
+			display: inline-block;
+			width: 200px;
+			height: 200px;
+			margin: 15px auto;
+		}
+		.lds-dual-ring:after {
+			content: ' ';
+			display: block;
+			width: 160px;
+			height: 160px;
+			margin: 1px auto;
+			border-radius: 50%;
+			border: 9px solid #f7c162;
+			border-color: #f7c162 transparent #f7c162 transparent;
+			animation: lds-dual-ring 1.2s linear infinite;
+		}
+		@keyframes lds-dual-ring {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.grid {
+			display: flex;
+			flex-wrap: wrap;
+			justify-items: center;
+			align-items: center;
+
+			.card {
+				flex: 1;
+				width: 160px;
+				margin: 10px 0;
+				text-align: center;
+				img {
+					padding: 10px;
+					width: 100px;
+				}
+
+				&.active {
+					img {
+						border: 1px solid #f7c162;
+						border-radius: 10px;
+					}
+				}
+			}
 		}
 	}
 }

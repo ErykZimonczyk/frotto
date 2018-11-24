@@ -11,41 +11,37 @@ import { BetsCurrentComponent } from './bets-current/bets-current.component';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { BetBuyComponent } from './bet-buy/bet-buy.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
-import { MapGotoLocationComponent } from './map-goto-location/map-goto-location.component';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		SplashComponent,
-		MapComponent,
-		MenuComponent,
-		ProfileComponent,
-		BetsHistoryComponent,
-		BetsCurrentComponent,
-		BetBuyComponent,
-		PaymentPopupComponent,
-		MapGotoLocationComponent,
-	],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		NgxMapboxGLModule.withConfig({
-			accessToken:
-				'pk.eyJ1Ijoia2FtaWw2NjYiLCJhIjoiY2pvdmZlcWx1MWlrMzNvczBndzZvdXlmYiJ9.B0Vkyr5JnArEy0fyHTqVsg',
-		}),
-		HttpClientModule,
-	],
-	providers: [],
-	bootstrap: [AppComponent],
-	exports: [
-		SplashComponent,
-		MapComponent,
-		MenuComponent,
-		ProfileComponent,
-		BetsHistoryComponent,
-		BetsCurrentComponent,
-		BetBuyComponent,
-	],
+  declarations: [
+    AppComponent,
+    SplashComponent,
+    MapComponent,
+    MenuComponent,
+    ProfileComponent,
+    BetsHistoryComponent,
+    BetsCurrentComponent,
+    BetBuyComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken:
+        'pk.eyJ1Ijoia2FtaWw2NjYiLCJhIjoiY2pvdmZlcWx1MWlrMzNvczBndzZvdXlmYiJ9.B0Vkyr5JnArEy0fyHTqVsg',
+    }),
+    HttpClientModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+  exports: [
+    SplashComponent,
+    MapComponent,
+    MenuComponent,
+    ProfileComponent,
+    BetsHistoryComponent,
+    BetsCurrentComponent,
+    BetBuyComponent,
+  ],
 })
 export class AppModule {}
