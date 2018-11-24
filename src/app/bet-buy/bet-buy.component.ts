@@ -18,6 +18,10 @@ export class BetBuyComponent implements OnInit {
 		0: 2000,
 		1: 200000,
 	};
+	public cost = {
+		0: 2,
+		1: 4,
+	};
 
 	public constructor(
 		@Inject(BetStoreService) private betStoreService: BetStoreService,

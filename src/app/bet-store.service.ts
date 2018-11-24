@@ -14,7 +14,7 @@ export class BetStoreService {
 	}
 
 	public getCurrentBet(): Bet {
-		return new Bet(21.1, 40, 0.89, 1);
+		return new Bet(21.1, 40, 0.89, 1, 0);
 		// return this.currentBet;
 	}
 
