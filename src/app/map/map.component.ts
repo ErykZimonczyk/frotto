@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Map, GeoJSONSource } from 'mapbox-gl';
@@ -12,12 +12,15 @@ import { Bet } from '../bet.entity';
 	templateUrl: './map.component.html',
 	styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
 	public back: boolean;
 	public refId: string;
+	public interval: NodeJS.Timer;
+	public interval_factor: NodeJS.Timer;
+	public interval_location: NodeJS.Timer;
 
 	map: Map;
-	distanceFactor: number;
+	distanceFactor: number = 100;
 	center = [21.003, 52.291];
 	bounds = [
 		[14.166667, 49.0], // Southwest coordinates
@@ -57,7 +60,7 @@ export class MapComponent implements OnInit {
 			this.bet.friendBetId = this.refId;
 		}
 		this.getData();
-		setInterval(this.updateData, 1000);
+		this.interval = setInterval(this.updateData, 10000);
 	}
 
 	clickCenterMap() {
@@ -194,7 +197,7 @@ export class MapComponent implements OnInit {
 
 		let radius = [6, 7, 8, 9, 10, 11, 10, 9, 8, 7];
 		let radCount = 0;
-		setInterval(() => {
+		this.interval_location = setInterval(() => {
 			this.map.setPaintProperty(
 				'current-point',
 				'circle-radius',
@@ -203,7 +206,7 @@ export class MapComponent implements OnInit {
 			radCount = ++radCount % radius.length;
 		}, 70);
 
-		setInterval(() => {
+		this.interval_factor = setInterval(() => {
 			const position = this.map.getCenter();
 			const distance = getDistance(
 				{ latitude: position.lat, longitude: position.lng },
@@ -213,5 +216,11 @@ export class MapComponent implements OnInit {
 			this.distanceFactor = modifier < 0 ? 0 : modifier;
 			this.bet.distanceFactor = this.distanceFactor;
 		}, 150);
+	}
+
+	ngOnDestroy() {
+		clearInterval(this.interval);
+		clearInterval(this.interval_factor);
+		clearInterval(this.interval_location);
 	}
 }
