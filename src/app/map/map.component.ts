@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Map } from 'mapbox-gl';
 import { FeatureCollection } from 'geojson';
@@ -35,12 +35,21 @@ export class MapComponent implements OnInit {
 	constructor(
 		private http: HttpClient,
 		private activatedRoute: ActivatedRoute,
+		private router: Router,
 		@Inject(BetStoreService) private betStoreService: BetStoreService,
 
 	) {}
 	/* tslint:disable:name */
 	async ngOnInit() {
-		this.bet = this.betStoreService.getCurrentBet();
+		this.activatedRoute.queryParams.subscribe(params => {
+			this.back = params['back'];
+		});
+		this.bet = this.betStoreService.getCurrentBet() || new Bet(
+			this.center[0],
+			this.center[1],
+			1,
+			0,
+			0);
 		const data: any = await this.http.get(this.betsUrl).toPromise();
 		this.geoBets.features = data.bets.map(bet => {
 			const { lat, lon } = bet.position;
@@ -56,15 +65,13 @@ export class MapComponent implements OnInit {
 
 		}})
 		this.progress = data.progress;
-
-		this.activatedRoute.queryParams.subscribe(params => {
-			this.back = params['back'];
-		});
 	}
 
 	makeBet() {
 		if (this.map) {
-			// this.bet.position = this.map.getCenter();
+			this.bet.position = this.map.getCenter();
+			this.betStoreService.setCurrentBet(this.bet);
+			this.router.navigate(['/bet']);
 		}
 	}
 
