@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Map } from 'mapbox-gl';
+import { Map, GeoJSONSource } from 'mapbox-gl';
 import { FeatureCollection } from 'geojson';
+import { getDistance } from 'geolib';
 import { BetStoreService } from '../bet-store.service';
 import { Bet } from '../bet.entity';
 
@@ -13,16 +14,16 @@ import { Bet } from '../bet.entity';
 })
 export class MapComponent implements OnInit {
 	public back: boolean;
+	public refId: string;
 
 	map: Map;
-
+	distanceFactor: number;
 	center = [21.003, 52.291];
 	bounds = [
 		[14.166667, 49.0], // Southwest coordinates
 		[24.15, 54.83555569], // Northeast coordinates
 	];
 	zoom = 10;
-	refId;
 
 	betsUrl = 'https://srotto.herokuapp.com/bets';
 
@@ -39,8 +40,11 @@ export class MapComponent implements OnInit {
 		private router: Router,
 		@Inject(BetStoreService) private betStoreService: BetStoreService
 	) {}
+
 	/* tslint:disable:name */
 	async ngOnInit() {
+		this.getData = this.getData.bind(this);
+		this.updateData = this.updateData.bind(this);
 		this.activatedRoute.queryParams.subscribe(params => {
 			this.back = params['back'];
 			this.refId = params['refId'];
@@ -52,6 +56,26 @@ export class MapComponent implements OnInit {
 		if (this.refId) {
 			this.bet.friendBetId = this.refId;
 		}
+		this.getData();
+		setInterval(this.updateData, 1000);
+	}
+
+	clickCenterMap() {
+		this.map.flyTo({
+			center: [21.003, 52.291],
+			zoom: 10,
+		});
+	}
+
+	makeBet() {
+		if (this.map) {
+			this.bet.position = this.map.getCenter();
+			this.betStoreService.setCurrentBet(this.bet);
+			this.router.navigate(['/bet']);
+		}
+	}
+
+	async getData() {
 		const data: any = await this.http.get(this.betsUrl).toPromise();
 		this.geoBets.features = data.bets.map(bet => {
 			const { lat, lon } = bet.position;
@@ -69,11 +93,11 @@ export class MapComponent implements OnInit {
 		this.progress = data.progress;
 	}
 
-	makeBet() {
+	updateData() {
 		if (this.map) {
-			this.bet.position = this.map.getCenter();
-			this.betStoreService.setCurrentBet(this.bet);
-			this.router.navigate(['/bet']);
+			this.getData();
+
+			(this.map.getSource('bets') as GeoJSONSource).setData(this.geoBets);
 		}
 	}
 
@@ -86,6 +110,23 @@ export class MapComponent implements OnInit {
 			clusterMaxZoom: 12,
 		});
 
+		this.map.addSource('current', {
+			type: 'geojson',
+			data: {
+				type: 'FeatureCollection',
+				features: [
+					{
+						type: 'Feature',
+						properties: {},
+						geometry: {
+							type: 'Point',
+							coordinates: [21.003, 52.291],
+						},
+					},
+				],
+			},
+		});
+
 		this.map.addLayer({
 			id: 'clusters',
 			type: 'circle',
@@ -95,11 +136,11 @@ export class MapComponent implements OnInit {
 				'circle-color': [
 					'step',
 					['get', 'point_count'],
-					'#51bbd6',
+					'#f7c162',
 					100,
-					'#f1f075',
+					'#D13B42',
 					750,
-					'#f28cb1',
+					'#483694',
 				],
 				'circle-radius': [
 					'step',
@@ -138,5 +179,39 @@ export class MapComponent implements OnInit {
 				'circle-opacity': 0.5,
 			},
 		});
+		this.map.addLayer({
+			id: 'current-point',
+			type: 'circle',
+			source: 'current',
+			paint: {
+				'circle-color': '#27ae60',
+				'circle-radius': ['get', 'rangeFactor'],
+				'circle-stroke-width': 1,
+				'circle-stroke-color': '#2ecc71',
+				'circle-opacity': 0.8,
+			},
+		});
+
+		let radius = [6, 7, 8, 9, 10, 11, 10, 9, 8, 7];
+		let radCount = 0;
+		setInterval(() => {
+			this.map.setPaintProperty(
+				'current-point',
+				'circle-radius',
+				radius[radCount]
+			);
+			radCount = ++radCount % radius.length;
+		}, 70);
+
+		setInterval(() => {
+			const position = this.map.getCenter();
+			const distance = getDistance(
+				{ latitude: position.lat, longitude: position.lng },
+				{ latitude: 52.291, longitude: 21.003 }
+			);
+			const modifier = Math.round(((300 - distance / 1000) / 300) * 100);
+			this.distanceFactor = modifier < 0 ? 0 : modifier;
+			this.bet.distanceFactor = this.distanceFactor;
+		}, 150);
 	}
 }

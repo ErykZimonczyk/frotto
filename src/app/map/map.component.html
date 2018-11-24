@@ -9,9 +9,14 @@
 		[maxBounds]="bounds"
 		(load)="onMapLoad($event)"
 	>
-	</mgl-map>
-	<img class="marker" src="/assets/pin.png" />
-	<div class="make_bet-button" (click)="makeBet()">
-		Zagraj
-	</div>
+</mgl-map>
+<img class="marker" src="/assets/pin.png" />
+<div class="marker-label">{{distanceFactor}}%</div>
+<div class="location_icon" (click)="clickCenterMap()">
+  <img class="marker" src="/assets/gps-fixed-indicator.svg" />
+</div>
+
+  <div class="make_bet-button" (click)="makeBet()">
+    Zagraj
+  </div>
 </div>

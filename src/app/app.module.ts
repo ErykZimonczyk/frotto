@@ -44,6 +44,7 @@ import { BetConfirmationComponent } from './bet-confirmation/bet-confirmation.co
 		BetsHistoryComponent,
 		BetsCurrentComponent,
 		BetBuyComponent,
+		BetConfirmationComponent,
 	],
 })
 export class AppModule {}
