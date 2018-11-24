@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Map } from 'mapbox-gl';
 import { HttpClient } from '@angular/common/http';
+import { Map } from 'mapbox-gl';
 import { FeatureCollection } from 'geojson';
+import { BetStoreService } from '../bet-store.service';
+import { Bet } from '../bet.entity';
 
 @Component({
 	selector: 'app-map',
@@ -19,7 +21,7 @@ export class MapComponent implements OnInit {
 		[14.166667, 49.0], // Southwest coordinates
 		[24.15, 54.83555569], // Northeast coordinates
 	];
-	zoom = 12;
+	zoom = 10;
 
 	betsUrl = 'https://srotto.herokuapp.com/bets';
 
@@ -28,41 +30,44 @@ export class MapComponent implements OnInit {
 		type: 'FeatureCollection',
 		features: [],
 	};
+	bet: Bet;
 
 	constructor(
 		private http: HttpClient,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		@Inject(BetStoreService) private betStoreService: BetStoreService
 	) {}
 	/* tslint:disable:name */
 	async ngOnInit() {
 		this.activatedRoute.queryParams.subscribe(params => {
 			this.back = params['back'];
 		});
+		this.bet = this.betStoreService.getCurrentBet();
 		const data: any = await this.http.get(this.betsUrl).toPromise();
 		this.geoBets.features = data.bets.map(bet => {
 			const { lat, lon } = bet.position;
 			return {
 				type: 'Feature',
 				geometry: {
-					type: 'Point',
+					type: 'circle',
 					coordinates: [lon, lat],
+				},
+				properties: {
 					rangeFactor: bet.rangeFactor,
 				},
 			};
 		});
 		this.progress = data.progress;
-		console.log(data, this.geoBets);
 	}
 
 	makeBet() {
 		if (this.map) {
-			console.log(this.map.getCenter());
+			// this.bet.position = this.map.getCenter();
 		}
 	}
 
 	onMapLoad($event) {
 		this.map = $event;
-		console.log(this.map);
 		this.map.addSource('bets', {
 			type: 'geojson',
 			data: this.geoBets,
@@ -115,10 +120,11 @@ export class MapComponent implements OnInit {
 			source: 'bets',
 			filter: ['!', ['has', 'point_count']],
 			paint: {
-				'circle-color': '#11b4da',
-				'circle-radius': 4,
+				'circle-color': '#f7c162',
+				'circle-radius': ['get', 'rangeFactor'],
 				'circle-stroke-width': 1,
 				'circle-stroke-color': '#fff',
+				'circle-opacity': 0.5,
 			},
 		});
 	}
