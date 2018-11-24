@@ -36,11 +36,13 @@ export class MapComponent implements OnInit {
 		private http: HttpClient,
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
-		@Inject(BetStoreService) private betStoreService: BetStoreService,
+		@Inject(BetStoreService) private betStoreService: BetStoreService
 
 	) {}
 	/* tslint:disable:name */
-	async ngOnInit() {
+	ngOnInit() {
+		this.getData = this.getData.bind(this);
+		this.updateData = this.updateData.bind(this);
 		this.activatedRoute.queryParams.subscribe(params => {
 			this.back = params['back'];
 		});
@@ -50,6 +52,20 @@ export class MapComponent implements OnInit {
 			1,
 			0,
 			0);
+		this.getData();
+		setInterval(this.updateData, 1000);
+
+	}
+
+	makeBet() {
+		if (this.map) {
+			this.bet.position = this.map.getCenter();
+			this.betStoreService.setCurrentBet(this.bet);
+			this.router.navigate(['/bet']);
+		}
+	}
+
+	async getData(){
 		const data: any = await this.http.get(this.betsUrl).toPromise();
 		this.geoBets.features = data.bets.map(bet => {
 			const { lat, lon } = bet.position;
@@ -67,11 +83,10 @@ export class MapComponent implements OnInit {
 		this.progress = data.progress;
 	}
 
-	makeBet() {
+	updateData(){
 		if (this.map) {
-			this.bet.position = this.map.getCenter();
-			this.betStoreService.setCurrentBet(this.bet);
-			this.router.navigate(['/bet']);
+			this.getData();
+			this.map.getSource('bets').setData(this.geoBets);
 		}
 	}
 
@@ -93,11 +108,11 @@ export class MapComponent implements OnInit {
 				'circle-color': [
 					'step',
 					['get', 'point_count'],
-					'#51bbd6',
+					'#f7c162',
 					100,
-					'#f1f075',
+					'#D13B42',
 					750,
-					'#f28cb1',
+					'#483694',
 				],
 				'circle-radius': [
 					'step',
