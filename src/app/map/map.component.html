@@ -1,9 +1,9 @@
+<app-splash *ngIf="!back"></app-splash>
 <div class="wrapper">
 	<mgl-map
 		[style]="'mapbox://styles/mapbox/light-v9'"
 		[zoom]="zoom"
 		[center]="center"
-
 		[dragRotate]="false"
 		[touchZoomRotate]="false"
 		(load)="onMapLoad($event)"

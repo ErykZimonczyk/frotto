@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Map } from 'mapbox-gl';
 import { HttpClient } from '@angular/common/http';
 import { FeatureCollection } from 'geojson';
@@ -9,7 +10,9 @@ import { FeatureCollection } from 'geojson';
 	styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-	map: Map
+	public back: boolean;
+
+	map: Map;
 
 	center = [21.003, 52.291];
 	bounds = [
@@ -21,17 +24,18 @@ export class MapComponent implements OnInit {
 	betsUrl = 'https://srotto.herokuapp.com/bets';
 
 	progress;
-	geoBets:FeatureCollection = {
+	geoBets: FeatureCollection = {
 		type: 'FeatureCollection',
-		features: []
-	}
+		features: [],
+	};
 
 	constructor(
-		private http: HttpClient
+		private http: HttpClient,
+		private activatedRoute: ActivatedRoute
 	) {}
 	/* tslint:disable:name */
 	async ngOnInit() {
-		const data:any = await this.http.get(this.betsUrl).toPromise();
+		const data: any = await this.http.get(this.betsUrl).toPromise();
 		this.geoBets.features = data.bets.map(bet => {
 			const { lat, lon } = bet.position;
 			return {
@@ -46,11 +50,15 @@ export class MapComponent implements OnInit {
 
 		}})
 		this.progress = data.progress;
+
+		this.activatedRoute.queryParams.subscribe(params => {
+			this.back = params['back'];
+		});
 	}
 
 	makeBet() {
-		if (this.map){
-			console.log(this.map.getCenter())
+		if (this.map) {
+			console.log(this.map.getCenter());
 		}
 	}
 
@@ -61,46 +69,46 @@ export class MapComponent implements OnInit {
 			type: 'geojson',
 			data: this.geoBets,
 			cluster: true,
-			clusterMaxZoom: 12
+			clusterMaxZoom: 12,
 		});
 
 		this.map.addLayer({
-			id: "clusters",
-			type: "circle",
-			source: "bets",
-			filter: ["has", "point_count"],
+			id: 'clusters',
+			type: 'circle',
+			source: 'bets',
+			filter: ['has', 'point_count'],
 			paint: {
-				"circle-color": [
-					"step",
-					["get", "point_count"],
-					"#51bbd6",
+				'circle-color': [
+					'step',
+					['get', 'point_count'],
+					'#51bbd6',
 					100,
-					"#f1f075",
+					'#f1f075',
 					750,
-					"#f28cb1"
+					'#f28cb1',
 				],
-				"circle-radius": [
-					"step",
-					["get", "point_count"],
+				'circle-radius': [
+					'step',
+					['get', 'point_count'],
 					20,
 					100,
 					30,
 					750,
-					40
-				]
-			}
+					40,
+				],
+			},
 		});
 
 		this.map.addLayer({
-			id: "cluster-count",
-			type: "symbol",
-			source: "bets",
-			filter: ["has", "point_count"],
+			id: 'cluster-count',
+			type: 'symbol',
+			source: 'bets',
+			filter: ['has', 'point_count'],
 			layout: {
-				"text-field": "{point_count_abbreviated}",
-				"text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-				"text-size": 12
-			}
+				'text-field': '{point_count_abbreviated}',
+				'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+				'text-size': 12,
+			},
 		});
 
 		this.map.addLayer({

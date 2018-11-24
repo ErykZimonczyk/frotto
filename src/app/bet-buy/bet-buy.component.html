@@ -1,0 +1,45 @@
+<h1>Podsumowanie</h1>
+<img class="back-button" (click)="back()" src="/assets/right-arrow.svg" />
+<div class="bet-detail">
+	<h2>Zakład {{ betTypes[bet.type] }}</h2>
+	<div class="row">
+		<span class="label">Typ zakładu</span
+		><span class="value">{{ bet.getTypeLabel() }}</span>
+	</div>
+	<div class="row row-group">
+		<span class="group-label">Współrzędne</span>
+		<span class="group">
+			<span class="row">
+				<span class="label">szerokość</span>
+				<span class="value">{{ bet.position.lat }}°</span>
+			</span>
+			<span class="row"
+				><span class="label">długość</span>
+				<span class="value">{{ bet.position.lon }}°</span></span
+			>
+		</span>
+	</div>
+	<div class="row">
+		<span class="label">Mnożnik</span
+		><span class="value">x{{ bet.distanceFactor }}</span>
+	</div>
+	<div class="row last">
+		<span class="label">Max. kwota wygranej</span
+		><span class="value"
+			>{{ bet.distanceFactor * maxPrize[bet.area] }} zł</span
+		>
+	</div>
+	<div class="row">
+		<span class="label">Koszt zakładu</span
+		><span class="value">{{ cost[bet.type] }} zł</span>
+	</div>
+	<div class="payment">
+		<span class="payment-info"
+			>Metoda płatności:
+			<u (click)="changePaymentMethod = true">karta płatnicza</u>
+		</span>
+		<div class="action-button" (click)="pay()">zapłać</div>
+	</div>
+</div>
+
+<app-payment-popup [show]="showPaymentMethod"></app-payment-popup>

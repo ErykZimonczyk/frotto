@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SplashComponent } from './splash/splash.component';
@@ -9,9 +8,10 @@ import { MenuComponent } from './menu/menu.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BetsHistoryComponent } from './bets-history/bets-history.component';
 import { BetsCurrentComponent } from './bets-current/bets-current.component';
-import { BetComponent } from './bet/bet.component';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
-import { HttpClientModule }    from '@angular/common/http';
+import { BetBuyComponent } from './bet-buy/bet-buy.component';
+import { HttpClientModule } from '@angular/common/http';
+import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 
 @NgModule({
 	declarations: [
@@ -22,7 +22,8 @@ import { HttpClientModule }    from '@angular/common/http';
 		ProfileComponent,
 		BetsHistoryComponent,
 		BetsCurrentComponent,
-		BetComponent,
+		BetBuyComponent,
+		PaymentPopupComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -31,7 +32,7 @@ import { HttpClientModule }    from '@angular/common/http';
 			accessToken:
 				'pk.eyJ1Ijoia2FtaWw2NjYiLCJhIjoiY2pvdmZlcWx1MWlrMzNvczBndzZvdXlmYiJ9.B0Vkyr5JnArEy0fyHTqVsg',
 		}),
-		HttpClientModule
+		HttpClientModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
@@ -42,7 +43,7 @@ import { HttpClientModule }    from '@angular/common/http';
 		ProfileComponent,
 		BetsHistoryComponent,
 		BetsCurrentComponent,
-		BetComponent,
+		BetBuyComponent,
 	],
 })
 export class AppModule {}
