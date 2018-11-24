@@ -13,35 +13,35 @@ import { BetBuyComponent } from './bet-buy/bet-buy.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		SplashComponent,
-		MapComponent,
-		MenuComponent,
-		ProfileComponent,
-		BetsHistoryComponent,
-		BetsCurrentComponent,
-		BetBuyComponent,
-	],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		NgxMapboxGLModule.withConfig({
-			accessToken:
-				'pk.eyJ1Ijoia2FtaWw2NjYiLCJhIjoiY2pvdmZlcWx1MWlrMzNvczBndzZvdXlmYiJ9.B0Vkyr5JnArEy0fyHTqVsg',
-		}),
-		HttpClientModule,
-	],
-	providers: [],
-	bootstrap: [AppComponent],
-	exports: [
-		SplashComponent,
-		MapComponent,
-		MenuComponent,
-		ProfileComponent,
-		BetsHistoryComponent,
-		BetsCurrentComponent,
-		BetBuyComponent,
-	],
+  declarations: [
+    AppComponent,
+    SplashComponent,
+    MapComponent,
+    MenuComponent,
+    ProfileComponent,
+    BetsHistoryComponent,
+    BetsCurrentComponent,
+    BetBuyComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken:
+        'pk.eyJ1Ijoia2FtaWw2NjYiLCJhIjoiY2pvdmZlcWx1MWlrMzNvczBndzZvdXlmYiJ9.B0Vkyr5JnArEy0fyHTqVsg',
+    }),
+    HttpClientModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+  exports: [
+    SplashComponent,
+    MapComponent,
+    MenuComponent,
+    ProfileComponent,
+    BetsHistoryComponent,
+    BetsCurrentComponent,
+    BetBuyComponent,
+  ],
 })
 export class AppModule {}
