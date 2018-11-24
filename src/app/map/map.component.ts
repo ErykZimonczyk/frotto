@@ -73,6 +73,7 @@ export class MapComponent implements OnInit {
   clickCenterMap() {
     this.map.flyTo({
       center: [21.003, 52.291],
+      zoom: 10
     });
   }
 
