@@ -1,0 +1,71 @@
+$color-gray-dark: #4f4d4b;
+
+.bet-detail {
+	background: white;
+	padding: 5px 15px 15px;
+	margin: 20px 0;
+	box-shadow: 1px 1px 9px #0000004d;
+
+	h2 {
+		color: $color-gray-dark;
+		font-size: 14pt;
+		text-align: center;
+		font-family: 'Hind Siliguri', sans-serif;
+		font-weight: 100;
+		border-bottom: 1px solid #f7c162;
+		padding: 10px 0;
+		margin: 0 10px 10px;
+	}
+
+	.row {
+		margin: 10px 0;
+		display: flex;
+		font-family: 'Hind Siliguri', sans-serif;
+		align-items: center;
+
+		&.row-group {
+			flex-direction: column;
+
+			align-items: flex-start;
+			min-width: 100%;
+
+			.row {
+				align-items: center;
+				margin: 5px 0;
+			}
+		}
+
+		.label,
+		.value {
+			flex: 1;
+			font-weight: 100;
+			vertical-align: middle;
+		}
+
+		.group-label {
+			color: $color-gray-dark;
+			flex: 1;
+			font-size: 10pt;
+		}
+
+		.group {
+			min-width: 100%;
+			flex: 1;
+
+			.label {
+				padding-left: 10px;
+				margin-right: -10px;
+			}
+		}
+
+		.label {
+			color: $color-gray-dark;
+			font-size: 10pt;
+		}
+
+		.value {
+			color: black;
+			font-size: 12pt;
+		}
+	}
+}

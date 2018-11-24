@@ -1,11 +1,27 @@
 .splash-screen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    
-    img {
-        width: 40%;
-        height: 40%;
-    }
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	transition: 500ms opacity;
+	opacity: 1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	background: white;
+	pointer-events: auto;
+
+	&.hide {
+		opacity: 0;
+	}
+
+	&.removed {
+		display: none;
+	}
+
+	img {
+		width: 40%;
+		height: 40%;
+	}
 }

@@ -9,8 +9,9 @@ import { MenuComponent } from './menu/menu.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BetsHistoryComponent } from './bets-history/bets-history.component';
 import { BetsCurrentComponent } from './bets-current/bets-current.component';
-import { BetComponent } from './bet/bet.component';
+
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { BetBuyComponent } from './bet-buy/bet-buy.component';
 
 @NgModule({
 	declarations: [
@@ -21,7 +22,7 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 		ProfileComponent,
 		BetsHistoryComponent,
 		BetsCurrentComponent,
-		BetComponent,
+		BetBuyComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -40,7 +41,7 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 		ProfileComponent,
 		BetsHistoryComponent,
 		BetsCurrentComponent,
-		BetComponent,
+		BetBuyComponent,
 	],
 })
 export class AppModule {}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-map',
@@ -6,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-	constructor() {}
+	public back: boolean;
+
+	constructor(
+		private router: Router,
+		private activatedRoute: ActivatedRoute
+	) {}
 	/* tslint:disable:name */
 	ngOnInit() {
+		this.activatedRoute.queryParams.subscribe(params => {
+			this.back = params['back'];
+		});
 		// const bounds = [
 		// 	[14.166667, 49.0], // Southwest coordinates
 		// 	[24.15, 54.83555569], // Northeast coordinates
@@ -24,5 +33,9 @@ export class MapComponent implements OnInit {
 		// map.dragRotate.disable();
 		// // disable map rotation using touch rotation gesture
 		// map.touchZoomRotate.disableRotation();
+	}
+
+	public buy() {
+		this.router.navigate(['/bet']);
 	}
 }

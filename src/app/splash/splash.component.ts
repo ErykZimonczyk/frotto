@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,11 +7,18 @@ import { Router } from '@angular/router';
 	styleUrls: ['./splash.component.scss'],
 })
 export class SplashComponent implements OnInit {
-	constructor(private router: Router) {}
+	public hide: boolean = false;
+	public remove: boolean = false;
+
+	constructor() {}
 
 	ngOnInit() {
 		setTimeout(() => {
-			this.router.navigate(['/map']);
-		}, 3000);
+			this.hide = true;
+		}, 2000);
+
+		setTimeout(() => {
+			this.remove = true;
+		}, 2500);
 	}
 }
