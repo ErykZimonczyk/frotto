@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Map } from 'mapbox-gl';
 import { HttpClient } from '@angular/common/http';
+import { Map } from 'mapbox-gl';
 import { FeatureCollection } from 'geojson';
+import { BetStoreService } from '../bet-store.service';
+import { Bet } from '../bet.entity';
 
 @Component({
 	selector: 'app-map',
@@ -28,13 +30,17 @@ export class MapComponent implements OnInit {
 		type: 'FeatureCollection',
 		features: [],
 	};
+	bet:Bet
 
 	constructor(
 		private http: HttpClient,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		@Inject(BetStoreService) private betStoreService: BetStoreService,
+
 	) {}
 	/* tslint:disable:name */
 	async ngOnInit() {
+		this.bet = this.betStoreService.getCurrentBet();
 		const data: any = await this.http.get(this.betsUrl).toPromise();
 		this.geoBets.features = data.bets.map(bet => {
 			const { lat, lon } = bet.position;
@@ -58,7 +64,7 @@ export class MapComponent implements OnInit {
 
 	makeBet() {
 		if (this.map) {
-			console.log(this.map.getCenter());
+			// this.bet.position = this.map.getCenter();
 		}
 	}
 
@@ -117,11 +123,11 @@ export class MapComponent implements OnInit {
 			source: 'bets',
 			filter: ['!', ['has', 'point_count']],
 			paint: {
-				'circle-color': '#11b4da',
+				'circle-color': '#f7c162',
 				'circle-radius':['get', 'rangeFactor' ],
 				'circle-stroke-width': 1,
 				'circle-stroke-color': '#fff',
-				'circle-opacity': 0.8
+				'circle-opacity': 0.5
 			}
 		});
 	}
