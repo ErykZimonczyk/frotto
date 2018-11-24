@@ -61,6 +61,13 @@ export class MapComponent implements OnInit {
 			this.back = params['back'];
 		});
 	}
+	getChosenClass(area) {
+		return this.bet.area === area ? 'chosen' : '';
+	}
+
+	chooseArea(area) {
+		this.bet.area = area;
+	}
 
 	makeBet() {
 		if (this.map) {
