@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
 		type: 'FeatureCollection',
 		features: [],
 	};
-	bet:Bet
+	bet: Bet;
 
 	constructor(
 		private http: HttpClient,
@@ -77,8 +77,7 @@ export class MapComponent implements OnInit {
 
 	onMapLoad($event) {
 		this.map = $event;
-		this.map.addSource('bets',
-		{
+		this.map.addSource('bets', {
 			type: 'geojson',
 			data: this.geoBets,
 			cluster: true,
@@ -131,11 +130,11 @@ export class MapComponent implements OnInit {
 			filter: ['!', ['has', 'point_count']],
 			paint: {
 				'circle-color': '#f7c162',
-				'circle-radius':['get', 'rangeFactor' ],
+				'circle-radius': ['get', 'rangeFactor'],
 				'circle-stroke-width': 1,
 				'circle-stroke-color': '#fff',
-				'circle-opacity': 0.5
-			}
+				'circle-opacity': 0.5,
+			},
 		});
 	}
 }

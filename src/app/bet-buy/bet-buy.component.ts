@@ -10,6 +10,8 @@ import { Bet } from '../bet.entity';
 })
 export class BetBuyComponent implements OnInit {
 	public bet: Bet;
+	public paid: boolean;
+	public loading: boolean = true;
 	public betTypes = {
 		0: 'Geo',
 		1: 'Geo+',
@@ -21,6 +23,15 @@ export class BetBuyComponent implements OnInit {
 	public cost = {
 		0: 2,
 		1: 4,
+	};
+
+	public paymentOption = 0;
+
+	public paymentOptionText = {
+		0: 'karta płatnicza',
+		1: 'Blik',
+		2: 'PayPal',
+		3: 'witrualny portfel',
 	};
 
 	public constructor(
@@ -38,5 +49,15 @@ export class BetBuyComponent implements OnInit {
 				back: true,
 			},
 		});
+	}
+
+	public pay() {
+		this.paid = true;
+
+		setTimeout(() => {
+			this.loading = false;
+		}, 1500);
+
+		this.betStoreService.clearBet();
 	}
 }
