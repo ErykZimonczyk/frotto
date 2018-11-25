@@ -18,7 +18,7 @@ export class BetBuyComponent implements OnInit {
 		1: 'Geo+',
 	};
 	public maxPrize = {
-		0: 20,
+		0: 50,
 		1: 2000,
 	};
 	public cost = {

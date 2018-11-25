@@ -155,7 +155,7 @@ export class MapComponent implements OnInit, OnDestroy {
 		return this.bet.area === area ? 'chosen' : '';
 	}
 	COUNTRY_FINAL_PRIZE = 200000;
-	VOIVODESHIP_FINAL_PRIZE = 2000;
+	VOIVODESHIP_FINAL_PRIZE = 5000;
 	setWinningPool(area) {
 		const { voivodeship, country } = this.progress;
 		const pool =
