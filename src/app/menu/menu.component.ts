@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, ActivationEnd } from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
+import {
+	ActivatedRoute,
+	Router,
+	ActivationEnd,
+	NavigationStart,
+} from '@angular/router';
+import { BetStoreService } from '../bet-store.service';
 
 @Component({
 	selector: 'app-menu',
@@ -7,23 +13,22 @@ import { ActivatedRoute, Router, ActivationEnd } from '@angular/router';
 	styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
-	public currentUser = {
-		img: '/assets/eryk.jpg',
-		name: 'Eryk Zimończyk',
-	};
 	public disableMenu: boolean;
+	public currentUser: any;
 	public open: boolean = false;
 	public overlayClose: boolean = true;
 
 	constructor(
 		private activatedRouter: ActivatedRoute,
-		private router: Router
-	) {}
+		private router: Router,
+		@Inject(BetStoreService) private betStoreService: BetStoreService
+	) {
+		this.currentUser = this.betStoreService.getCurrentUser();
+	}
 
 	ngOnInit() {
 		this.router.events.subscribe(data => {
 			if (data instanceof ActivationEnd) {
-				console.log(data);
 				this.disableMenu = data.snapshot.data.disableMenu;
 			}
 		});

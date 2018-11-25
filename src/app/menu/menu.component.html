@@ -7,11 +7,50 @@
 		<span class="name">{{ currentUser.name }}</span>
 	</div>
 	<ul>
-		<li [routerLink]="['/user']">Profil</li>
-		<li [routerLink]="['/winners']">Wygrane</li>
-		<li [routerLink]="['/user/bets']">Moje Zakłady</li>
-		<li [routerLink]="['/offers']">Promocje</li>
-		<li [routerLink]="['/about']">O Nas</li>
+		<li
+			(click)="toggle()"
+			[routerLink]="['/']"
+			[routerLinkActive]="['active']"
+			[queryParams]="{ back: true }"
+			class="home"
+		>
+			Graj
+		</li>
+		<li
+			(click)="toggle()"
+			[routerLinkActive]="['active']"
+			[routerLink]="['/user']"
+		>
+			Profil
+		</li>
+		<li
+			(click)="toggle()"
+			[routerLinkActive]="['active']"
+			[routerLink]="['/winners']"
+		>
+			Wygrane
+		</li>
+		<li
+			(click)="toggle()"
+			[routerLinkActive]="['active']"
+			[routerLink]="['/user/bets']"
+		>
+			Moje Zakłady
+		</li>
+		<li
+			(click)="toggle()"
+			[routerLinkActive]="['active']"
+			[routerLink]="['/offers']"
+		>
+			Promocje
+		</li>
+		<li
+			(click)="toggle()"
+			[routerLinkActive]="['active']"
+			[routerLink]="['/help']"
+		>
+			Jak Grać?
+		</li>
 	</ul>
 </nav>
 <div

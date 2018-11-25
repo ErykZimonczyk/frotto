@@ -98,7 +98,6 @@ export class WinnersComponent implements OnInit {
     });
     // user data
     const userData: any = await this.http.get(this.userBetsUrl + this.userId).toPromise();
-    console.log(userData)
     const userWinningRegional = [];
     const userWinningGlobal = [];
     userData.userWins.forEach(bet => {
@@ -146,6 +145,8 @@ export class WinnersComponent implements OnInit {
 	chooseArea(area) {
     this.area = area;
     (this.map.getSource('winningBets') as GeoJSONSource).setData(this.winningBets[this.area]);
+    (this.map.getSource('userWinningBets') as GeoJSONSource).setData(this.userWinningBets[this.area]);
+    (this.map.getSource('userArchiveBets') as GeoJSONSource).setData(this.userArchiveBets[this.area]);
 	}
 
 	onMapLoad($event) {
@@ -154,18 +155,32 @@ export class WinnersComponent implements OnInit {
 			type: 'geojson',
 			data: this.winningBets[this.area]
 		});
-
-		// this.map.addSource('userBets', {
-		// 	type: 'geojson',
-		// 	data: this.userBets,
-		// 	cluster: true,
-		// 	clusterMaxZoom: 12,
-		// });
+		this.map.addSource('userWinningBets', {
+			type: 'geojson',
+			data: this.userWinningBets[this.area]
+		});
+		this.map.addSource('userArchiveBets', {
+			type: 'geojson',
+			data: this.userArchiveBets[this.area]
+		});
 
 		this.map.addLayer({
-			id: 'unclustered-point',
+			id: 'winningBets-point',
 			type: 'circle',
 			source: 'winningBets',
+			paint: {
+				'circle-color': '#483694',
+				'circle-radius': 5,
+				'circle-stroke-width': 1,
+				'circle-stroke-color': '#fff',
+				'circle-opacity': 0.5,
+			},
+    });
+
+    this.map.addLayer({
+			id: 'userWinningBets-point',
+			type: 'circle',
+			source: 'userWinningBets',
 			paint: {
 				'circle-color': '#D13B42',
 				'circle-radius': 5,
@@ -173,20 +188,21 @@ export class WinnersComponent implements OnInit {
 				'circle-stroke-color': '#fff',
 				'circle-opacity': 0.5,
 			},
+    });
+
+    this.map.addLayer({
+			id: 'userArchiveBets-point',
+			type: 'circle',
+			source: 'userArchiveBets',
+			paint: {
+				'circle-color': '#f7c162',
+				'circle-radius': 5,
+				'circle-stroke-width': 1,
+				'circle-stroke-color': '#fff',
+				'circle-opacity': 0.5,
+			},
 		});
 
-		// this.map.addLayer({
-		// 	id: 'user-points',
-		// 	type: 'circle',
-		// 	source: 'userBets',
-		// 	filter: ['!', ['has', 'point_count']],
-		// 	paint: {
-		// 		'circle-color': '#27ae60',
-		// 		'circle-radius': ['get', 'rangeFactor'],
-		// 		'circle-stroke-width': 1,
-		// 		'circle-stroke-color': '#fff',
-		// 		'circle-opacity': 0.5,
-		// 	},
-		// });
+
 	}
 }

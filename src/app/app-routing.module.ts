@@ -14,6 +14,7 @@ import {
 	stagger,
 	transition,
 } from '@angular/animations';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
 	{
@@ -30,6 +31,11 @@ const routes: Routes = [
 		path: 'bet/confirm',
 		component: BetConfirmationComponent,
 		data: { state: 'confirm', disableMenu: true },
+	},
+	{
+		path: 'user',
+		component: ProfileComponent,
+		data: { state: 'user' },
 	},
 	{
 		path: 'winners',

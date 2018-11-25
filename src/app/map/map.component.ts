@@ -119,10 +119,10 @@ export class MapComponent implements OnInit, OnDestroy {
 						wins = wins + winner.prize;
 					}
 					localStorage.setItem('lastResult', result.id);
-					if (wins) {
-						this.notifyMe(wins);
-					}
 				});
+        if (wins) {
+          this.notifyMe(wins);
+        }
 			}
 		}
 
