@@ -16,6 +16,7 @@ import {
 } from '@angular/animations';
 import { ProfileComponent } from './profile/profile.component';
 import { BetsCurrentComponent } from './bets-current/bets-current.component';
+import { HowToComponent } from './how-to/how-to.component';
 
 const routes: Routes = [
 	{
@@ -47,6 +48,11 @@ const routes: Routes = [
 		path: 'winners',
 		component: WinnersComponent,
 		data: { state: 'winners' },
+	},
+	{
+		path: 'how',
+		component: HowToComponent,
+		data: { state: 'how' },
 	},
 ];
 

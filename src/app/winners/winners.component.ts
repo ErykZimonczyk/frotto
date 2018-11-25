@@ -135,7 +135,7 @@ export class WinnersComponent implements OnInit {
       }
       this.userArchiveRegionalBets.features = userArchiveRegional;
       this.userArchiveGlobalBets.features = userArchiveGlobal;
-		});
+    });
   }
 
 	getChosenClass(area) {
@@ -182,7 +182,7 @@ export class WinnersComponent implements OnInit {
 			type: 'circle',
 			source: 'userWinningBets',
 			paint: {
-				'circle-color': '#D13B42',
+				'circle-color': '#27ae60',
 				'circle-radius': 5,
 				'circle-stroke-width': 1,
 				'circle-stroke-color': '#fff',
