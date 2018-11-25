@@ -26,7 +26,7 @@
 	<div class="row last">
 		<span class="label">Max. kwota wygranej</span
 		><span class="value"
-			>{{ bet.distanceFactor * maxPrize[bet.area] }} zł</span
+			>{{ (bet.distanceFactor * maxPrize[bet.area]) | currency: "PLN" : "" }} zł</span
 		>
 	</div>
 	<div class="row padding">

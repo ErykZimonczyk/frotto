@@ -33,6 +33,7 @@ export class MapComponent implements OnInit, OnDestroy {
 	userId;
 	progress;
 	winningPool: number = 2;
+	maximumPool: number = 200000;
 	geoBets: FeatureCollection = {
 		type: 'FeatureCollection',
 		features: [],
@@ -167,9 +168,14 @@ export class MapComponent implements OnInit, OnDestroy {
 		this.winningPool = Math.floor(pool);
 	}
 
+	setMaximumPool(area) {
+		this.maximumPool = area === 1 ? this.COUNTRY_FINAL_PRIZE : this.VOIVODESHIP_FINAL_PRIZE;
+	}
+
 	chooseArea(area) {
 		this.bet.area = area;
 		this.setWinningPool(area);
+		this.setMaximumPool(area);
 	}
 
 	updateData() {
@@ -244,6 +250,37 @@ export class MapComponent implements OnInit, OnDestroy {
 			id: 'cluster-count',
 			type: 'symbol',
 			source: 'bets',
+			filter: ['has', 'point_count'],
+			layout: {
+				'text-field': '{point_count_abbreviated}',
+				'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+				'text-size': 12,
+			},
+		});
+
+		this.map.addLayer({
+			id: 'user-clusters',
+			type: 'circle',
+			source: 'userBets',
+			filter: ['has', 'point_count'],
+			paint: {
+				'circle-color': '#27ae60',
+				'circle-radius': [
+					'step',
+					['get', 'point_count'],
+					20,
+					100,
+					30,
+					750,
+					40,
+				],
+			},
+		});
+
+		this.map.addLayer({
+			id: 'user-cluster-count',
+			type: 'symbol',
+			source: 'userBets',
 			filter: ['has', 'point_count'],
 			layout: {
 				'text-field': '{point_count_abbreviated}',

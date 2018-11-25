@@ -58,7 +58,6 @@ mgl-map {
 	background: transparent;
 	width: 100%;
 	bottom: 30px;
-
 	font-family: 'Hind Siliguri', sans-serif;
 	padding: 0 20px;
 	.container {
@@ -73,6 +72,9 @@ mgl-map {
 			text-align: center;
 			color: #cdcdcd;
 			padding-top: 4px;
+		}
+		.prize {
+			color: rgb(156, 156, 156);
 		}
 		.select-container {
 			padding-top: 10px;
