@@ -32,6 +32,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
 	userId;
 	progress;
+	winningPool: number = 2;
 	geoBets: FeatureCollection = {
 		type: 'FeatureCollection',
 		features: [],
@@ -148,17 +149,24 @@ export class MapComponent implements OnInit, OnDestroy {
 		this.geoBets.features = geoPoints;
 		this.userBets.features = userPoints;
 		this.progress = data.progress;
+		this.setWinningPool(this.bet.area);
 	}
 	getChosenClass(area) {
 		return this.bet.area === area ? 'chosen' : '';
 	}
+	COUNTRY_FINAL_PRIZE = 200000
+	VOIVODESHIP_FINAL_PRIZE = 20000
+	setWinningPool(area) {
+		const { voivodeship, country } = this.progress;
+		const pool = area === 1 
+			? country * this.COUNTRY_FINAL_PRIZE
+			: voivodeship * this.VOIVODESHIP_FINAL_PRIZE;
+		this.winningPool =  Math.floor(pool);
+	}
 
 	chooseArea(area) {
 		this.bet.area = area;
-	}
-
-	getStyle(area) {
-		return { height: '50%' };
+		this.setWinningPool(area);
 	}
 
 	updateData() {
