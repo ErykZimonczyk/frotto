@@ -1,37 +1,63 @@
 <app-splash *ngIf="!back"></app-splash>
 <div class="wrapper">
-  <mgl-map [style]="'mapbox://styles/mapbox/light-v9'" [zoom]="zoom" [center]="center" [dragRotate]="false"
-           [touchZoomRotate]="false" (load)="onMapLoad($event)">
-  </mgl-map>
-  <img class="marker" src="/assets/pin.png"/>
-  <div class="marker-label">{{ distanceFactor }}%</div>
-  <div class="location_icon" (click)="clickCenterMap()">
-    <img class="marker" src="/assets/60834.svg"/>
-  </div>
-  <div class="make_bet-button" (click)="makeBet()">Zagraj</div>
-  <div class="picker-container">
-    <div class="container">
-      <div class="select-container">
-        <div class="split-container" (click)="chooseArea(0)" [ngClass]="getChosenClass(0)">
-          <div class="img-ctn">
-            <img class="image" src="/assets/mazowieckie.png" alt=""/>
-            <div class="progress left">
-            </div>
-          </div>
-          <h5>Wojewódzki</h5>
-        </div>
-        <div class="split-container" (click)="chooseArea(1)" [ngClass]="getChosenClass(1)">
-          <div class="img-ctn">
-
-            <img class="image" src="/assets/polska.png" alt=""/>
-            <div class="progress right">
-            </div>
-          </div>
-          <h5>Krajowy</h5>
-        </div>
-      </div>
-      <div class="pool">W puli <span class="prize">{{ winningPool | currency: "PLN" : ""}}zł</span> z <span class="prize">{{ maximumPool | currency: "PLN" : "" }}zł</span></div>
-    </div>
-
-  </div>
+	<mgl-map
+		[style]="'mapbox://styles/mapbox/light-v9'"
+		[zoom]="zoom"
+		[center]="center"
+		[dragRotate]="false"
+		[touchZoomRotate]="false"
+		(load)="onMapLoad($event)"
+	>
+	</mgl-map>
+	<img class="marker" src="/assets/pin.png" />
+	<div class="marker-label">{{ distanceFactor }}%</div>
+	<div class="location_icon" (click)="clickCenterMap()">
+		<img class="marker" src="/assets/60834.svg" />
+	</div>
+	<div class="random_icon" (click)="clickRandom()">
+		<img class="marker" src="/assets/dice.svg" />
+	</div>
+	<div class="make_bet-button" (click)="makeBet()">Zagraj</div>
+	<div class="picker-container">
+		<div class="container">
+			<div class="select-container">
+				<div
+					class="split-container"
+					(click)="chooseArea(0)"
+					[ngClass]="getChosenClass(0)"
+				>
+					<div class="img-ctn">
+						<img
+							class="image"
+							src="/assets/mazowieckie.png"
+							alt=""
+						/>
+						<div class="progress left"></div>
+					</div>
+					<h5>Wojewódzki</h5>
+				</div>
+				<div
+					class="split-container"
+					(click)="chooseArea(1)"
+					[ngClass]="getChosenClass(1)"
+				>
+					<div class="img-ctn">
+						<img class="image" src="/assets/polska.png" alt="" />
+						<div class="progress right"></div>
+					</div>
+					<h5>Krajowy</h5>
+				</div>
+			</div>
+			<div class="pool">
+				W puli
+				<span class="prize"
+					>{{ winningPool | currency: 'PLN':'' }}zł</span
+				>
+				z
+				<span class="prize"
+					>{{ maximumPool | currency: 'PLN':'' }}zł</span
+				>
+			</div>
+		</div>
+	</div>
 </div>
