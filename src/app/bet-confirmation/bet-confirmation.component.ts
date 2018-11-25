@@ -25,7 +25,7 @@ export class BetConfirmationComponent implements OnInit {
 		selBox.style.left = '0';
 		selBox.style.top = '0';
 		selBox.style.opacity = '0';
-		selBox.value = `${window.location.host}/?refId=${this.refId}`;
+		selBox.value = `http://${window.location.host}/?refId=${this.refId}`;
 		document.body.appendChild(selBox);
 		selBox.focus();
 		selBox.select();
