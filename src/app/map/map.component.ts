@@ -68,7 +68,7 @@ export class MapComponent implements OnInit, OnDestroy {
 			this.bet.friendBetId = this.refId;
 		}
 		this.getData();
-		this.interval = setInterval(this.updateData, 10000);
+		this.interval = setInterval(this.updateData, 2000);
 	}
 
 	notifyMe(prize) {
