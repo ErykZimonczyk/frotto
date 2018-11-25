@@ -35,7 +35,6 @@ export class BetsCurrentComponent implements OnInit {
 			.toPromise();
 
 		userData.userCurrentBets.forEach(bet => {
-			console.log(bet);
 			this.bets.push(
 				new Bet(
 					bet.position.lat,
