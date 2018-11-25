@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BetConfirmationComponent } from './bet-confirmation/bet-confirmation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WinnersComponent } from './winners/winners.component';
+import { HowToComponent } from './how-to/how-to.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { WinnersComponent } from './winners/winners.component';
 		BetBuyComponent,
 		BetConfirmationComponent,
 		WinnersComponent,
+		HowToComponent,
 	],
 	imports: [
 		BrowserModule,
