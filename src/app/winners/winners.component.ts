@@ -29,7 +29,7 @@ export class WinnersComponent implements OnInit {
   area = 0;
 
 	betsUrl = 'https://lotto-geo.herokuapp.com/bets';
-	userBetsUrl = 'https://lotto-geo.herokuapp.com/account?userId=';
+	userBetsUrl = 'https://lotto-geo.herokuapp.com/account';
 
   userId;
 
@@ -97,7 +97,7 @@ export class WinnersComponent implements OnInit {
       this.winningGlobalBets.features = global;
     });
     // user data
-    const userData: any = await this.http.get(this.userBetsUrl + this.userId).toPromise();
+    const userData: any = await this.http.get(this.userBetsUrl, { params: { userId: this.userId } }).toPromise();
     const userWinningRegional = [];
     const userWinningGlobal = [];
     userData.userWins.forEach(bet => {

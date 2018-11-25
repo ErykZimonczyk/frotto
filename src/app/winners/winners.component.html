@@ -10,31 +10,26 @@
 	>
   </mgl-map>
   <div class="picker-container">
-		<div class="container">
-			<div
-				class="vovoideship-container"
-				(click)="chooseArea(0)"
-				[ngClass]="getChosenClass(0)"
-			>
-				<img
-					class="image"
-					src="https://d2z7bzwflv7old.cloudfront.net/cdn_image/exH_600/images/maps/en/ir/ir-nonameoutline.gif"
-					alt=""
-				/>
-				<p>wojewodzkie</p>
-			</div>
-			<div
-				class="country-container"
-				(click)="chooseArea(1)"
-				[ngClass]="getChosenClass(1)"
-			>
-				<img
-					class="image"
-					src="https://www.worldatlas.com/webimage/countrys/europe/outline/pl.gif"
-					alt=""
-				/>
-				<p>krajowe</p>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+      <div class="select-container">
+        <div class="split-container" (click)="chooseArea(0)" [ngClass]="getChosenClass(0)">
+          <div class="img-ctn">
+            <img class="image" src="/assets/mazowieckie.png" alt=""/>
+            <div class="progress left">
+            </div>
+          </div>
+          <h5>Wojewódzki</h5>
+        </div>
+        <div class="split-container" (click)="chooseArea(1)" [ngClass]="getChosenClass(1)">
+          <div class="img-ctn">
+
+            <img class="image" src="/assets/polska.png" alt=""/>
+            <div class="progress right">
+            </div>
+          </div>
+          <h5>Krajowy</h5>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
