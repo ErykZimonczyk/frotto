@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Map, GeoJSONSource } from 'mapbox-gl';
 import { FeatureCollection } from 'geojson';
 import { Bet } from '../bet.entity';
+import { BetStoreService } from '../bet-store.service';
 
 @Component({
   selector: 'app-winners',
@@ -28,8 +29,10 @@ export class WinnersComponent implements OnInit {
   area = 0;
 
 	betsUrl = 'https://lotto-geo.herokuapp.com/bets';
+	userBetsUrl = 'https://lotto-geo.herokuapp.com/account?userId=';
 
-	progress;
+  userId;
+
 	winningRegionalBets: FeatureCollection = {
 		type: 'FeatureCollection',
 		features: [],
@@ -38,25 +41,37 @@ export class WinnersComponent implements OnInit {
 		type: 'FeatureCollection',
 		features: [],
 	};
-	userWinningBets: FeatureCollection = {
+	userWinningRegionalBets: FeatureCollection = {
 		type: 'FeatureCollection',
 		features: [],
   };
-  userBets: FeatureCollection = {
+	userWinningGlobalBets: FeatureCollection = {
+		type: 'FeatureCollection',
+		features: [],
+  };
+  userArchiveRegionalBets: FeatureCollection = {
+		type: 'FeatureCollection',
+		features: [],
+  };
+  userArchiveGlobalBets: FeatureCollection = {
 		type: 'FeatureCollection',
 		features: [],
   };
 
   winningBets = [this.winningRegionalBets, this.winningGlobalBets]
+  userWinningBets = [this.userWinningRegionalBets, this.userWinningGlobalBets]
+  userArchiveBets = [this.userArchiveRegionalBets, this.userArchiveGlobalBets]
 	bet: Bet;
 
 	constructor(
-		private http: HttpClient
+    private http: HttpClient,
+		@Inject(BetStoreService) private betStoreService: BetStoreService
 	) {}
 
 	/* tslint:disable:name */
 	async ngOnInit() {
-		this.getData = this.getData.bind(this);
+    this.getData = this.getData.bind(this);
+    this.userId = this.betStoreService.getUserId();
 		this.getData();
 	}
 
@@ -80,6 +95,47 @@ export class WinnersComponent implements OnInit {
       }
       this.winningRegionalBets.features = regional;
       this.winningGlobalBets.features = global;
+    });
+    // user data
+    const userData: any = await this.http.get(this.userBetsUrl + this.userId).toPromise();
+    console.log(userData)
+    const userWinningRegional = [];
+    const userWinningGlobal = [];
+    userData.userWins.forEach(bet => {
+			const { lat, lon } = bet.position;
+			const point = {
+				type: 'Feature',
+				geometry: {
+					type: 'Point',
+					coordinates: [lon, lat],
+				}
+      };
+      if (bet.area === 0) {
+        userWinningRegional.push(point);
+      } else {
+        userWinningGlobal.push(point);
+      }
+      this.userWinningRegionalBets.features = userWinningRegional;
+      this.userWinningGlobalBets.features = userWinningGlobal;
+    });
+    const userArchiveRegional = [];
+    const userArchiveGlobal = [];
+    userData.userArchiveBets.forEach(bet => {
+			const { lat, lon } = bet.position;
+			const point = {
+				type: 'Feature',
+				geometry: {
+					type: 'Point',
+					coordinates: [lon, lat],
+				}
+      };
+      if (bet.area === 0) {
+        userArchiveRegional.push(point);
+      } else {
+        userArchiveGlobal.push(point);
+      }
+      this.userArchiveRegionalBets.features = userArchiveRegional;
+      this.userArchiveGlobalBets.features = userArchiveGlobal;
 		});
   }
 
