@@ -8,16 +8,18 @@ export class BetStoreService {
 	public currentBet: Bet;
 	public userId: string;
 	public currentUser: any;
-	public users = [
-		{
+	public users = {
+		1: {
 			img: '/assets/eryk.jpg',
 			name: 'Eryk Zimończyk',
+			id: 1,
 		},
-		{
+		2: {
 			img: '/assets/maria.jpeg',
 			name: 'Maria Ładowna',
+			id: 2,
 		},
-	];
+	};
 
 	constructor() {
 		const urlParams = new URLSearchParams(window.location.search);

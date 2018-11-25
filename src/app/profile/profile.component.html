@@ -5,7 +5,16 @@
 		<span class="name">{{ currentUser.name }}</span>
 	</div>
 	<div class="row">
+		<div class="win-text">Saldo</div>
+		<div class="win-amount">
+			<span class="circle"> {{ balance }}</span>
+		</div>
+	</div>
+
+	<div class="row">
 		<div class="win-text">Suma wygranych</div>
-		<div class="win-amount"><span class="circle"> 207.34</span></div>
+		<div class="win-amount">
+			<span class="circle"> {{ totalWinAmount }}</span>
+		</div>
 	</div>
 </div>

@@ -122,9 +122,9 @@ export class MapComponent implements OnInit, OnDestroy {
 					}
 					localStorage.setItem('lastResult', result.id);
 				});
-        if (wins) {
-          this.notifyMe(wins);
-        }
+				if (wins) {
+					this.notifyMe(wins);
+				}
 			}
 		}
 
@@ -154,14 +154,15 @@ export class MapComponent implements OnInit, OnDestroy {
 	getChosenClass(area) {
 		return this.bet.area === area ? 'chosen' : '';
 	}
-	COUNTRY_FINAL_PRIZE = 200000
-	VOIVODESHIP_FINAL_PRIZE = 20000
+	COUNTRY_FINAL_PRIZE = 200000;
+	VOIVODESHIP_FINAL_PRIZE = 2000;
 	setWinningPool(area) {
 		const { voivodeship, country } = this.progress;
-		const pool = area === 1 
-			? country * this.COUNTRY_FINAL_PRIZE
-			: voivodeship * this.VOIVODESHIP_FINAL_PRIZE;
-		this.winningPool =  Math.floor(pool);
+		const pool =
+			area === 1
+				? country * this.COUNTRY_FINAL_PRIZE
+				: voivodeship * this.VOIVODESHIP_FINAL_PRIZE;
+		this.winningPool = Math.floor(pool);
 	}
 
 	chooseArea(area) {
