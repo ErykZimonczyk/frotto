@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Map, GeoJSONSource } from 'mapbox-gl';
 import { FeatureCollection } from 'geojson';
 import { Bet } from '../bet.entity';
+import { BetStoreService } from '../bet-store.service';
 
 @Component({
   selector: 'app-winners',
@@ -28,8 +29,10 @@ export class WinnersComponent implements OnInit {
   area = 0;
 
 	betsUrl = 'https://lotto-geo.herokuapp.com/bets';
+	userBetsUrl = 'https://lotto-geo.herokuapp.com/account?userId=';
 
-	progress;
+  userId;
+
 	winningRegionalBets: FeatureCollection = {
 		type: 'FeatureCollection',
 		features: [],
@@ -38,25 +41,37 @@ export class WinnersComponent implements OnInit {
 		type: 'FeatureCollection',
 		features: [],
 	};
-	userWinningBets: FeatureCollection = {
+	userWinningRegionalBets: FeatureCollection = {
 		type: 'FeatureCollection',
 		features: [],
   };
-  userBets: FeatureCollection = {
+	userWinningGlobalBets: FeatureCollection = {
+		type: 'FeatureCollection',
+		features: [],
+  };
+  userArchiveRegionalBets: FeatureCollection = {
+		type: 'FeatureCollection',
+		features: [],
+  };
+  userArchiveGlobalBets: FeatureCollection = {
 		type: 'FeatureCollection',
 		features: [],
   };
 
   winningBets = [this.winningRegionalBets, this.winningGlobalBets]
+  userWinningBets = [this.userWinningRegionalBets, this.userWinningGlobalBets]
+  userArchiveBets = [this.userArchiveRegionalBets, this.userArchiveGlobalBets]
 	bet: Bet;
 
 	constructor(
-		private http: HttpClient
+    private http: HttpClient,
+		@Inject(BetStoreService) private betStoreService: BetStoreService
 	) {}
 
 	/* tslint:disable:name */
 	async ngOnInit() {
-		this.getData = this.getData.bind(this);
+    this.getData = this.getData.bind(this);
+    this.userId = this.betStoreService.getUserId();
 		this.getData();
 	}
 
@@ -80,6 +95,46 @@ export class WinnersComponent implements OnInit {
       }
       this.winningRegionalBets.features = regional;
       this.winningGlobalBets.features = global;
+    });
+    // user data
+    const userData: any = await this.http.get(this.userBetsUrl + this.userId).toPromise();
+    const userWinningRegional = [];
+    const userWinningGlobal = [];
+    userData.userWins.forEach(bet => {
+			const { lat, lon } = bet.position;
+			const point = {
+				type: 'Feature',
+				geometry: {
+					type: 'Point',
+					coordinates: [lon, lat],
+				}
+      };
+      if (bet.area === 0) {
+        userWinningRegional.push(point);
+      } else {
+        userWinningGlobal.push(point);
+      }
+      this.userWinningRegionalBets.features = userWinningRegional;
+      this.userWinningGlobalBets.features = userWinningGlobal;
+    });
+    const userArchiveRegional = [];
+    const userArchiveGlobal = [];
+    userData.userArchiveBets.forEach(bet => {
+			const { lat, lon } = bet.position;
+			const point = {
+				type: 'Feature',
+				geometry: {
+					type: 'Point',
+					coordinates: [lon, lat],
+				}
+      };
+      if (bet.area === 0) {
+        userArchiveRegional.push(point);
+      } else {
+        userArchiveGlobal.push(point);
+      }
+      this.userArchiveRegionalBets.features = userArchiveRegional;
+      this.userArchiveGlobalBets.features = userArchiveGlobal;
 		});
   }
 
@@ -90,6 +145,8 @@ export class WinnersComponent implements OnInit {
 	chooseArea(area) {
     this.area = area;
     (this.map.getSource('winningBets') as GeoJSONSource).setData(this.winningBets[this.area]);
+    (this.map.getSource('userWinningBets') as GeoJSONSource).setData(this.userWinningBets[this.area]);
+    (this.map.getSource('userArchiveBets') as GeoJSONSource).setData(this.userArchiveBets[this.area]);
 	}
 
 	onMapLoad($event) {
@@ -98,18 +155,32 @@ export class WinnersComponent implements OnInit {
 			type: 'geojson',
 			data: this.winningBets[this.area]
 		});
-
-		// this.map.addSource('userBets', {
-		// 	type: 'geojson',
-		// 	data: this.userBets,
-		// 	cluster: true,
-		// 	clusterMaxZoom: 12,
-		// });
+		this.map.addSource('userWinningBets', {
+			type: 'geojson',
+			data: this.userWinningBets[this.area]
+		});
+		this.map.addSource('userArchiveBets', {
+			type: 'geojson',
+			data: this.userArchiveBets[this.area]
+		});
 
 		this.map.addLayer({
-			id: 'unclustered-point',
+			id: 'winningBets-point',
 			type: 'circle',
 			source: 'winningBets',
+			paint: {
+				'circle-color': '#483694',
+				'circle-radius': 5,
+				'circle-stroke-width': 1,
+				'circle-stroke-color': '#fff',
+				'circle-opacity': 0.5,
+			},
+    });
+
+    this.map.addLayer({
+			id: 'userWinningBets-point',
+			type: 'circle',
+			source: 'userWinningBets',
 			paint: {
 				'circle-color': '#D13B42',
 				'circle-radius': 5,
@@ -117,20 +188,21 @@ export class WinnersComponent implements OnInit {
 				'circle-stroke-color': '#fff',
 				'circle-opacity': 0.5,
 			},
+    });
+
+    this.map.addLayer({
+			id: 'userArchiveBets-point',
+			type: 'circle',
+			source: 'userArchiveBets',
+			paint: {
+				'circle-color': '#f7c162',
+				'circle-radius': 5,
+				'circle-stroke-width': 1,
+				'circle-stroke-color': '#fff',
+				'circle-opacity': 0.5,
+			},
 		});
 
-		// this.map.addLayer({
-		// 	id: 'user-points',
-		// 	type: 'circle',
-		// 	source: 'userBets',
-		// 	filter: ['!', ['has', 'point_count']],
-		// 	paint: {
-		// 		'circle-color': '#27ae60',
-		// 		'circle-radius': ['get', 'rangeFactor'],
-		// 		'circle-stroke-width': 1,
-		// 		'circle-stroke-color': '#fff',
-		// 		'circle-opacity': 0.5,
-		// 	},
-		// });
+
 	}
 }
