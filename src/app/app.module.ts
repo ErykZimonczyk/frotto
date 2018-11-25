@@ -12,6 +12,7 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { BetBuyComponent } from './bet-buy/bet-buy.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BetConfirmationComponent } from './bet-confirmation/bet-confirmation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
 	declarations: [
@@ -33,6 +34,7 @@ import { BetConfirmationComponent } from './bet-confirmation/bet-confirmation.co
 				'pk.eyJ1Ijoia2FtaWw2NjYiLCJhIjoiY2pvdmZlcWx1MWlrMzNvczBndzZvdXlmYiJ9.B0Vkyr5JnArEy0fyHTqVsg',
 		}),
 		HttpClientModule,
+		BrowserAnimationsModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],

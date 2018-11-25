@@ -1,22 +1,22 @@
-<app-splash *ngIf="!back"></app-splash>
-<div class="wrapper">
-	<mgl-map
-		[style]="'mapbox://styles/mapbox/light-v9'"
-		[zoom]="zoom"
-		[center]="center"
-		[dragRotate]="false"
-		[touchZoomRotate]="false"
-		[maxBounds]="bounds"
-		(load)="onMapLoad($event)"
-	>
-</mgl-map>
-<img class="marker" src="/assets/pin.png" />
-<div class="marker-label">{{distanceFactor}}%</div>
-<div class="location_icon" (click)="clickCenterMap()">
-  <img class="marker" src="/assets/gps-fixed-indicator.svg" />
-</div>
+<div>
+	<app-splash *ngIf="!back"></app-splash>
+	<div class="wrapper">
+		<mgl-map
+			[style]="'mapbox://styles/mapbox/light-v9'"
+			[zoom]="zoom"
+			[center]="center"
+			[dragRotate]="false"
+			[touchZoomRotate]="false"
+			[maxBounds]="bounds"
+			(load)="onMapLoad($event)"
+		>
+		</mgl-map>
+		<img class="marker" src="/assets/pin.png" />
+		<div class="marker-label">{{ distanceFactor }}%</div>
+		<div class="location_icon" (click)="clickCenterMap()">
+			<img class="marker" src="/assets/gps-fixed-indicator.svg" />
+		</div>
 
-  <div class="make_bet-button" (click)="makeBet()">
-    Zagraj
-  </div>
+		<div class="make_bet-button" (click)="makeBet()">Zagraj</div>
+	</div>
 </div>
