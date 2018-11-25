@@ -28,7 +28,7 @@ export class MapComponent implements OnInit, OnDestroy {
 	];
 	zoom = 10;
 
-	betsUrl = 'https://srotto.herokuapp.com/bets';
+	betsUrl = 'https://lotto-geo.herokuapp.com/bets';
 
 	progress;
 	geoBets: FeatureCollection = {
