@@ -143,10 +143,7 @@ $color-gray-dark: #4f4d4b;
 		.path {
 			stroke-dasharray: 1000;
 			stroke-dashoffset: 0;
-			&.circle {
-				-webkit-animation: dash 1.9s 1s ease-in-out;
-				animation: dash 1.9s 1s ease-in-out;
-			}
+
 			&.line {
 				stroke-dashoffset: 1000;
 				-webkit-animation: dash 1.9s 1.35s ease-in-out forwards;
