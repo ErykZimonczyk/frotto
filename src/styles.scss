@@ -13,9 +13,11 @@ body {
 	background: $color-gray-light;
 	box-sizing: border-box;
 }
-  *, *:before, *:after {
+*,
+*:before,
+*:after {
 	box-sizing: inherit;
-  }
+}
 
 h1 {
 	font-family: 'Hind Siliguri', sans-serif;
@@ -23,7 +25,7 @@ h1 {
 	color: $color-gray-dark;
 	font-weight: 400;
 	background: white;
-	height: 40px;
+	height: 60px;
 	font-size: 16pt;
 	box-shadow: 1px 1px 9px #0000004d;
 	margin: 0;

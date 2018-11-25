@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BetStoreService } from '../bet-store.service';
 import { Bet } from '../bet.entity';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
 	selector: 'app-bet-buy',
@@ -10,6 +11,8 @@ import { Bet } from '../bet.entity';
 })
 export class BetBuyComponent implements OnInit {
 	public bet: Bet;
+	public paid: boolean;
+	public loading: boolean = true;
 	public betTypes = {
 		0: 'Geo',
 		1: 'Geo+',
@@ -23,13 +26,27 @@ export class BetBuyComponent implements OnInit {
 		1: 4,
 	};
 
+	public paymentOption = 0;
+
+	public paymentOptionText = {
+		0: 'karta płatnicza',
+		1: 'Blik',
+		2: 'PayPal',
+		3: 'witrualny portfel',
+	};
+
 	public constructor(
 		@Inject(BetStoreService) private betStoreService: BetStoreService,
-		private router: Router
+		private router: Router,
+		private http: HttpClient
 	) {}
 
 	ngOnInit() {
 		this.bet = this.betStoreService.getCurrentBet();
+
+		if (!this.bet) {
+			this.router.navigate(['']);
+		}
 	}
 
 	public back(): void {
@@ -38,5 +55,23 @@ export class BetBuyComponent implements OnInit {
 				back: true,
 			},
 		});
+	}
+
+	public async pay() {
+		this.paid = true;
+
+		const data: any = await this.http
+			.post('https://srotto.herokuapp.com/bet', this.bet.mapToApi())
+			.toPromise();
+
+		setTimeout(() => {
+			this.router.navigate(['bet/confirm'], {
+				queryParams: {
+					refId: data.bet.id,
+				},
+			});
+		}, 1500);
+
+		this.betStoreService.clearBet();
 	}
 }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, enableProdMode } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SplashComponent } from './splash/splash.component';
@@ -11,7 +11,7 @@ import { BetsCurrentComponent } from './bets-current/bets-current.component';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { BetBuyComponent } from './bet-buy/bet-buy.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
+import { BetConfirmationComponent } from './bet-confirmation/bet-confirmation.component';
 
 
 @NgModule({
@@ -24,7 +24,7 @@ import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 		BetsHistoryComponent,
 		BetsCurrentComponent,
 		BetBuyComponent,
-		PaymentPopupComponent,
+		BetConfirmationComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -45,6 +45,9 @@ import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 		BetsHistoryComponent,
 		BetsCurrentComponent,
 		BetBuyComponent,
+		BetConfirmationComponent,
 	],
 })
 export class AppModule {}
+
+enableProdMode();
