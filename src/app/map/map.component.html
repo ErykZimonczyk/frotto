@@ -1,14 +1,7 @@
 <app-splash *ngIf="!back"></app-splash>
 <div class="wrapper">
-	<mgl-map
-		[style]="'mapbox://styles/mapbox/light-v9'"
-		[zoom]="zoom"
-		[center]="center"
-		[dragRotate]="false"
-		[touchZoomRotate]="false"
-		[maxBounds]="bounds"
-		(load)="onMapLoad($event)"
-	>
+	<mgl-map [style]="'mapbox://styles/mapbox/light-v9'" [zoom]="zoom" [center]="center" [dragRotate]="false"
+	 [touchZoomRotate]="false" [maxBounds]="bounds" (load)="onMapLoad($event)">
 	</mgl-map>
 	<img class="marker" src="/assets/pin.png" />
 	<div class="marker-label">{{ distanceFactor }}%</div>
@@ -18,29 +11,21 @@
 	<div class="make_bet-button" (click)="makeBet()">Zagraj</div>
 	<div class="picker-container">
 		<div class="container">
-			<div
-				class="vovoideship-container"
-				(click)="chooseArea(0)"
-				[ngClass]="getChosenClass(0)"
-			>
-				<img
-					class="image"
-					src="https://d2z7bzwflv7old.cloudfront.net/cdn_image/exH_600/images/maps/en/ir/ir-nonameoutline.gif"
-					alt=""
-				/>
-				<p>wojewodzkie</p>
+			<div class="vovoideship-container" (click)="chooseArea(0)" [ngClass]="getChosenClass(0)">
+				<div class="image-container">
+					<!-- <div class="progress">
+						<img class="image" src="/assets/mazowieckie.png" alt="" />
+					</div> -->
+				</div>
+				<!-- <p>wojewodzkie</p> -->
 			</div>
-			<div
-				class="country-container"
-				(click)="chooseArea(1)"
-				[ngClass]="getChosenClass(1)"
-			>
-				<img
-					class="image"
-					src="https://www.worldatlas.com/webimage/countrys/europe/outline/pl.gif"
-					alt=""
-				/>
-				<p>krajowe</p>
+			<div class="country-container" (click)="chooseArea(1)" [ngClass]="getChosenClass(1)">
+				<!-- <div class="image-container" [ngStyle]="getStyle(1)">
+					<div class="progress">
+						<img class="image" src="/assets/polska.png" alt="" />
+					</div>
+				</div>
+				<p>krajowe</p> -->
 			</div>
 		</div>
 	</div>
