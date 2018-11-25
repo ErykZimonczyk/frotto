@@ -24,12 +24,12 @@ const routes: Routes = [
 	{
 		path: 'bet',
 		component: BetBuyComponent,
-		data: { state: 'bet' },
+		data: { state: 'bet', disableMenu: true },
 	},
 	{
 		path: 'bet/confirm',
 		component: BetConfirmationComponent,
-		data: { state: 'confirm' },
+		data: { state: 'confirm', disableMenu: true },
 	},
 	{
 		path: 'winners',
