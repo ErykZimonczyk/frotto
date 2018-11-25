@@ -1,11 +1,6 @@
 mgl-map {
-	height: 100%;
-	width: 100%;
-}
-
-.wrapper {
-	position: relative;
-	height: 100%;
+	height: 100vh;
+	width: 100vw;
 }
 
 .marker {
@@ -55,6 +50,60 @@ mgl-map {
 	font-weight: 600;
 	text-align: center;
 	text-transform: uppercase;
+}
+
+
+.picker-container {
+   position: absolute;
+	text-transform: uppercase;
+   background: transparent;
+   width: 100%;
+   top: 75%;
+   height: 50px;
+	font-family: 'Hind Siliguri', sans-serif;
+	padding: 0 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.container {
+		display: flex;
+		padding-top: 20px;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		width: 340px;
+		height: 120px;
+		background: white;
+		box-shadow: 1px 1px 9px #0000004d;
+		border: 0px solid black;
+		border-radius: 20px;
+		.vovoideship-container, .country-container {
+			margin: 5px;
+			position: relative;
+			transition: transform 1s;
+			opacity: 0.6;
+			&.chosen {
+				transform: scale(1.2);
+			}
+			width: 48%;
+			height: 80%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			.image {
+				width: 35%;
+			}
+		}
+		.separator {
+			position: relative;
+			background: black;
+			border: 1px solid black;
+			border-radius: 25%;
+			width: 2px;
+			height: 50%;
+		}
+	}
 }
 
 .location_icon {

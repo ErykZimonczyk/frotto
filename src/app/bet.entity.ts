@@ -43,7 +43,7 @@ export class Bet {
 				lat: this.position.lat,
 			},
 			friendBetId: this.friendBetId,
-			distanceFactor: this.distanceFactor,
+			distanceFactor: this.distanceFactor / 100.0,
 			area: this.area,
 		};
 	}

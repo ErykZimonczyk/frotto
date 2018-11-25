@@ -15,9 +15,9 @@ import { Bet } from '../bet.entity';
 export class MapComponent implements OnInit, OnDestroy {
 	public back: boolean;
 	public refId: string;
-	public interval: NodeJS.Timer;
-	public interval_factor: NodeJS.Timer;
-	public interval_location: NodeJS.Timer;
+	public interval: any;
+	public interval_factor: any;
+	public interval_location: any;
 
 	map: Map;
 	distanceFactor: number = 100;
@@ -107,6 +107,13 @@ export class MapComponent implements OnInit, OnDestroy {
 		this.geoBets.features = geoPoints;
 		this.userBets.features = userPoints;
 		this.progress = data.progress;
+	}
+	getChosenClass(area) {
+		return this.bet.area === area ? 'chosen' : '';
+	}
+
+	chooseArea(area) {
+		this.bet.area = area;
 	}
 
 	updateData() {
