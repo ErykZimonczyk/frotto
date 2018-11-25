@@ -181,6 +181,7 @@ export class MapComponent implements OnInit, OnDestroy {
 			this.getData();
 
 			(this.map.getSource('bets') as GeoJSONSource).setData(this.geoBets);
+			(this.map.getSource('userBets') as GeoJSONSource).setData(this.userBets);
 		}
 	}
 

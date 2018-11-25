@@ -135,7 +135,7 @@ export class WinnersComponent implements OnInit {
       }
       this.userArchiveRegionalBets.features = userArchiveRegional;
       this.userArchiveGlobalBets.features = userArchiveGlobal;
-		});
+    });
   }
 
 	getChosenClass(area) {
