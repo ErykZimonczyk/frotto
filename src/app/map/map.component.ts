@@ -95,6 +95,13 @@ export class MapComponent implements OnInit, OnDestroy {
 		});
 		this.progress = data.progress;
 	}
+	getChosenClass(area) {
+		return this.bet.area === area ? 'chosen' : '';
+	}
+
+	chooseArea(area) {
+		this.bet.area = area;
+	}
 
 	updateData() {
 		if (this.map) {

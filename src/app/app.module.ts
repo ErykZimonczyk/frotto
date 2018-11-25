@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BetConfirmationComponent } from './bet-confirmation/bet-confirmation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 @NgModule({
 	declarations: [
 		AppComponent,
