@@ -1,0 +1,21 @@
+<span *ngIf="!disableMenu" class="menu-burger" (click)="toggle()">
+	<img src="/assets/menu.png" alt="" />
+</span>
+<nav *ngIf="!disableMenu" [ngClass]="{ open: open }">
+	<div class="profile" [routerLink]="['/user']">
+		<img [src]="currentUser.img" />
+		<span class="name">{{ currentUser.name }}</span>
+	</div>
+	<ul>
+		<li [routerLink]="['/user']">Profil</li>
+		<li [routerLink]="['/winners']">Wygrane</li>
+		<li [routerLink]="['/user/bets']">Moje Zakłady</li>
+		<li [routerLink]="['/offers']">Promocje</li>
+		<li [routerLink]="['/about']">O Nas</li>
+	</ul>
+</nav>
+<div
+	class="overlay"
+	[ngClass]="{ fade: !open, remove: overlayClose }"
+	(click)="toggle()"
+></div>
