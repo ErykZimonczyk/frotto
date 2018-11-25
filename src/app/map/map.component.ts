@@ -99,7 +99,6 @@ export class MapComponent implements OnInit, OnDestroy {
 				},
 			};
 			if (bet.userId === 1) {
-				console.log(point);
 				userPoints.push(point);
 			} else {
 				geoPoints.push(point);
