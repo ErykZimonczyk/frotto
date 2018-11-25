@@ -48,7 +48,16 @@
 					<h5>Krajowy</h5>
 				</div>
 			</div>
-			<div class="pool">W puli: {{ winningPool }}zł</div>
+			<div class="pool">
+				W puli
+				<span class="prize"
+					>{{ winningPool | currency: 'PLN':'' }}zł</span
+				>
+				z
+				<span class="prize"
+					>{{ maximumPool | currency: 'PLN':'' }}zł</span
+				>
+			</div>
 		</div>
 	</div>
 </div>
