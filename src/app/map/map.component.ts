@@ -35,6 +35,10 @@ export class MapComponent implements OnInit, OnDestroy {
 		type: 'FeatureCollection',
 		features: [],
 	};
+	userBets: FeatureCollection = {
+		type: 'FeatureCollection',
+		features: [],
+	};
 	bet: Bet;
 
 	constructor(
@@ -80,9 +84,11 @@ export class MapComponent implements OnInit, OnDestroy {
 
 	async getData() {
 		const data: any = await this.http.get(this.betsUrl).toPromise();
-		this.geoBets.features = data.bets.map(bet => {
+		const userPoints = [];
+		const geoPoints = [];
+		data.bets.forEach(bet => {
 			const { lat, lon } = bet.position;
-			return {
+			const point = {
 				type: 'Feature',
 				geometry: {
 					type: 'circle',
@@ -92,7 +98,15 @@ export class MapComponent implements OnInit, OnDestroy {
 					rangeFactor: bet.rangeFactor,
 				},
 			};
+			if (bet.userId === 1) {
+				console.log(point);
+				userPoints.push(point);
+			} else {
+				geoPoints.push(point);
+			}
 		});
+		this.geoBets.features = geoPoints;
+		this.userBets.features = userPoints;
 		this.progress = data.progress;
 	}
 
@@ -109,6 +123,13 @@ export class MapComponent implements OnInit, OnDestroy {
 		this.map.addSource('bets', {
 			type: 'geojson',
 			data: this.geoBets,
+			cluster: true,
+			clusterMaxZoom: 12,
+		});
+
+		this.map.addSource('userBets', {
+			type: 'geojson',
+			data: this.userBets,
 			cluster: true,
 			clusterMaxZoom: 12,
 		});
@@ -182,6 +203,21 @@ export class MapComponent implements OnInit, OnDestroy {
 				'circle-opacity': 0.5,
 			},
 		});
+
+		this.map.addLayer({
+			id: 'user-points',
+			type: 'circle',
+			source: 'userBets',
+			filter: ['!', ['has', 'point_count']],
+			paint: {
+				'circle-color': '#27ae60',
+				'circle-radius': ['get', 'rangeFactor'],
+				'circle-stroke-width': 1,
+				'circle-stroke-color': '#fff',
+				'circle-opacity': 0.5,
+			},
+		});
+
 		this.map.addLayer({
 			id: 'current-point',
 			type: 'circle',
