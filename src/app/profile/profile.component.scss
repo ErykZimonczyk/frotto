@@ -1,0 +1,93 @@
+$color-gray-dark: #4f4d4b;
+
+.action-button {
+	color: #444;
+	font-family: 'Hind Siliguri', sans-serif;
+	font-size: 14pt;
+	padding: 10px 20px;
+	border-radius: 20px;
+	background: #f7c162;
+	box-shadow: 1px 1px 9px #0000004d;
+	z-index: 2;
+	display: block;
+	min-width: 200px;
+	margin: 10px auto;
+	max-width: 250px;
+	width: 100%;
+	font-weight: 600;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.bet-detail {
+	background: white;
+	padding: 5px 15px 15px;
+	margin: 30px 0 20px;
+	box-shadow: 1px 1px 9px #0000004d;
+	position: relative;
+	min-height: 80vh;
+	font-family: 'Hind Siliguri', sans-serif;
+
+	h2 {
+		color: $color-gray-dark;
+		font-size: 14pt;
+		text-align: center;
+
+		font-weight: 100;
+		border-bottom: 1px solid #f7c162;
+		padding: 20px 0;
+		margin: 0 auto 20px;
+		max-width: 600px;
+	}
+
+	.profile {
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		img {
+			flex: 0;
+			height: 200px;
+			width: 200px;
+			border-radius: 100%;
+			margin: 10px auto;
+		}
+
+		.name {
+			font-size: 18pt;
+			margin: 10px;
+		}
+	}
+
+	.row {
+		border-top: 1px solid #f7c162;
+		padding: 15px 0;
+		text-align: center;
+		.win-text {
+			font-size: 11pt;
+			color: rgba(79, 77, 75, 0.678);
+		}
+
+		.win-amount {
+			font-size: 25pt;
+			margin-top: 45px;
+
+			.circle {
+				height: 40px;
+				width: 47px;
+				background: #f7c162;
+				border-radius: 100%;
+				padding: 30px 12px;
+				position: relative;
+
+				&::after {
+					content: 'zł';
+					font-size: 9pt;
+					margin-left: 10px;
+					position: absolute;
+					right: -13px;
+					top: 45px;
+				}
+			}
+		}
+	}
+}

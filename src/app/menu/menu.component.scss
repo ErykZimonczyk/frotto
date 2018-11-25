@@ -31,7 +31,6 @@ nav {
 	.profile {
 		display: flex;
 		align-items: center;
-		border-bottom: 1px solid #f7c162;
 		padding: 15px;
 
 		img {
@@ -50,9 +49,22 @@ nav {
 		list-style: none;
 		margin: 0;
 		padding: 0;
+
+		.home {
+			font-weight: 600;
+			background: rgba(247, 192, 98, 0.5);
+
+			&.active {
+				background: rgba(247, 192, 98, 1);
+			}
+		}
 		li {
 			padding: 15px;
 			border-bottom: 1px solid #f0efea;
+
+			&.active {
+				background: #f0efea;
+			}
 		}
 	}
 }
