@@ -1,3 +1,11 @@
-<p>
-  profile works!
-</p>
+<h1>Twój Profil</h1>
+<div class="bet-detail">
+	<div class="profile" [routerLink]="['/user']">
+		<img [src]="currentUser.img" />
+		<span class="name">{{ currentUser.name }}</span>
+	</div>
+	<div class="row">
+		<div class="win-text">Suma wygranych</div>
+		<div class="win-amount"><span class="circle"> 207.34</span></div>
+	</div>
+</div>
