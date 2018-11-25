@@ -50,6 +50,8 @@ export class MapComponent implements OnInit, OnDestroy {
 
 	/* tslint:disable:name */
 	async ngOnInit() {
+
+
 		this.getData = this.getData.bind(this);
 		this.updateData = this.updateData.bind(this);
 		this.activatedRoute.queryParams.subscribe(params => {
@@ -66,6 +68,25 @@ export class MapComponent implements OnInit, OnDestroy {
 		this.getData();
 		this.interval = setInterval(this.updateData, 10000);
 	}
+
+   notifyMe(prize) {
+    if (Notification.permission === 'granted') {
+      new Notification('GeoLotto', {
+        icon: 'http://geo-lotto.s3-website-eu-west-1.amazonaws.com/assets/apple-icon-57x57.png',
+        body: `Wygrałeś w jednym z Twoich zakładów: ${prize} zł`
+      });
+    }
+    else if (Notification.permission !== 'denied') {
+      Notification.requestPermission(function (permission) {
+        if (permission === 'granted') {
+          new Notification('GeoLotto', {
+            icon: 'http://geo-lotto.s3-website-eu-west-1.amazonaws.com/assets/apple-icon-57x57.png',
+            body: `Wygrałeś w jednym z Twoich zakładów: ${prize} zł`
+          });
+        }
+      });
+    }
+  }
 
 	clickCenterMap() {
 		this.map.flyTo({
@@ -86,6 +107,26 @@ export class MapComponent implements OnInit, OnDestroy {
 		const data: any = await this.http.get(this.betsUrl).toPromise();
 		const userPoints = [];
 		const geoPoints = [];
+
+		//get results
+    const lastResult = localStorage.getItem('lastResult');
+    if (data.results.length && data.results[data.results.length - 1]) {
+      const result = data.results[data.results.length - 1];
+      if (result.id !== lastResult) {
+        let wins = 0;
+        result.winners.forEach((winner) => {
+          if (winner.userId === this.betStoreService.getUserId()) {
+            wins = wins + winner.prize;
+          }
+          localStorage.setItem('lastResult', result.id);
+          if (wins) {
+            this.notifyMe(wins);
+          }
+        });
+      }
+    }
+
+
 		data.bets.forEach(bet => {
 			const { lat, lon } = bet.position;
 			const point = {
@@ -114,6 +155,10 @@ export class MapComponent implements OnInit, OnDestroy {
 
 	chooseArea(area) {
 		this.bet.area = area;
+	}
+
+	getStyle(area) {
+		return { height: "50%" }
 	}
 
 	updateData() {

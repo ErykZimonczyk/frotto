@@ -6,8 +6,12 @@ import { Bet } from './bet.entity';
 })
 export class BetStoreService {
 	public currentBet: Bet;
+	public userId: string;
 
-	constructor() {}
+	constructor() {
+    const urlParams = new URLSearchParams(window.location.search);
+    this.userId = urlParams.get('userId') || '1';
+  }
 
 	public setCurrentBet(bet: Bet) {
 		this.currentBet = bet;
@@ -16,6 +20,10 @@ export class BetStoreService {
 	public getCurrentBet(): Bet {
 		return this.currentBet;
 	}
+
+  public getUserId(): string {
+    return this.userId;
+  }
 
 	public clearBet(): void {
 		this.currentBet = null;

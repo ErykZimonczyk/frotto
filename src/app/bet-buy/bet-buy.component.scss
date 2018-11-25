@@ -27,6 +27,10 @@ $color-gray-dark: #4f4d4b;
 		align-items: center;
 		max-width: 400px;
 
+		&.padding {
+			padding-bottom: 130px;
+		}
+
 		&.row-group {
 			flex-direction: column;
 
@@ -198,7 +202,8 @@ $color-gray-dark: #4f4d4b;
 			flex-wrap: wrap;
 			justify-items: center;
 			align-items: center;
-
+			overflow: scroll;
+			max-height: 400px;
 			.card {
 				flex: 1;
 

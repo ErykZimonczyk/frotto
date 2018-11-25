@@ -35,9 +35,9 @@ export class Bet {
 		return this.position.lng.toFixed(2);
 	}
 
-	public mapToApi() {
+	public mapToApi(userId) {
 		return {
-			userId: 1,
+			userId,
 			position: {
 				lon: this.position.lng,
 				lat: this.position.lat,
