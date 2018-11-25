@@ -67,6 +67,18 @@ nav {
 			&.active {
 				background: #f0efea;
 			}
+
+			&.disabled {
+				pointer-events: none;
+				background: lightgray;
+				color: gray;
+				.teaser {
+					vertical-align: middle;
+					font-size: 9pt;
+					color: black;
+					margin-left: 20px;
+				}
+			}
 		}
 	}
 }

@@ -2,7 +2,7 @@
 	<img src="/assets/menu.png" alt="" />
 </span>
 <nav *ngIf="!disableMenu" [ngClass]="{ open: open }">
-	<div class="profile" [routerLink]="['/user']">
+	<div class="profile" [routerLink]="['/user']" (click)="toggle()">
 		<img [src]="currentUser.img" />
 		<span class="name">{{ currentUser.name }}</span>
 	</div>
@@ -37,12 +37,8 @@
 		>
 			Moje Zakłady
 		</li>
-		<li
-			(click)="toggle()"
-			[routerLinkActive]="['active']"
-			[routerLink]="['/offers']"
-		>
-			Promocje
+		<li class="disabled">
+			Promocje <span class="teaser">już wkrótce!</span>
 		</li>
 		<li
 			(click)="toggle()"
