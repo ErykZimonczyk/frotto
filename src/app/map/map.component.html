@@ -1,7 +1,7 @@
 <app-splash *ngIf="!back"></app-splash>
 <div class="wrapper">
   <mgl-map [style]="'mapbox://styles/mapbox/light-v9'" [zoom]="zoom" [center]="center" [dragRotate]="false"
-           [touchZoomRotate]="false" [maxBounds]="bounds" (load)="onMapLoad($event)">
+           [touchZoomRotate]="false" (load)="onMapLoad($event)">
   </mgl-map>
   <img class="marker" src="/assets/pin.png"/>
   <div class="marker-label">{{ distanceFactor }}%</div>
