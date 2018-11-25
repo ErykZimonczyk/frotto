@@ -61,7 +61,7 @@ export class BetBuyComponent implements OnInit {
 		this.paid = true;
 
 		const data: any = await this.http
-			.post('https://srotto.herokuapp.com/bet', this.bet.mapToApi())
+			.post('https://srotto.herokuapp.com/bet', this.bet.mapToApi(this.betStoreService.getUserId()))
 			.toPromise();
 
 		setTimeout(() => {

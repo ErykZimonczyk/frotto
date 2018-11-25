@@ -115,14 +115,14 @@ export class MapComponent implements OnInit, OnDestroy {
       if (result.id !== lastResult) {
         let wins = 0;
         result.winners.forEach((winner) => {
-          if (winner.userId === 1) {
+          if (winner.userId === this.betStoreService.getUserId()) {
             wins = wins + winner.prize;
           }
+          localStorage.setItem('lastResult', result.id);
+          if (wins) {
+            this.notifyMe(wins);
+          }
         });
-        localStorage.setItem('lastResult', result.id);
-        if (wins) {
-          this.notifyMe(wins);
-        }
       }
     }
 

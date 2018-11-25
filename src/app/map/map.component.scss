@@ -109,15 +109,14 @@ mgl-map {
 .location_icon {
 	cursor: pointer;
 	position: absolute;
-	bottom: 30px;
+	bottom: 210px;
 	right: 20px;
 	width: 30px;
 	height: 30px;
 	z-index: 10;
-	background: white;
-	padding: 5px;
+  padding: 5px;
 	border-radius: 5px;
-	opacity: 0.8;
+	opacity: 0.5;
 	img {
 		margin-top: 15px;
 		width: 30px;
