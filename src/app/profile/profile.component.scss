@@ -77,17 +77,6 @@ $color-gray-dark: #4f4d4b;
 			border-radius: 100%;
 			align-items: center;
 			justify-content: center;
-
-			.circle {
-				&::after {
-					content: 'zł';
-					font-size: 9pt;
-					margin-left: 10px;
-					position: absolute;
-					right: -13px;
-					top: 45px;
-				}
-			}
 		}
 	}
 }

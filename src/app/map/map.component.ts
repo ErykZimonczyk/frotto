@@ -154,8 +154,10 @@ export class MapComponent implements OnInit, OnDestroy {
 	getChosenClass(area) {
 		return this.bet.area === area ? 'chosen' : '';
 	}
+
 	COUNTRY_FINAL_PRIZE = 200000;
 	VOIVODESHIP_FINAL_PRIZE = 5000;
+
 	setWinningPool(area) {
 		const { voivodeship, country } = this.progress;
 		const pool =
@@ -318,5 +320,54 @@ export class MapComponent implements OnInit, OnDestroy {
 		clearInterval(this.interval);
 		clearInterval(this.interval_factor);
 		clearInterval(this.interval_location);
+	}
+
+	clickRandom() {
+		const WARSAW_CORDS = {
+			lonStart: 20.394103,
+			latStart: 51.956075,
+			lonEnd: 21.896596,
+			latEnd: 53.011252,
+		};
+		const POLAND_CORDS = {
+			lonStart: 16.274882,
+			latStart: 50.425698,
+			lonEnd: 23.204749,
+			latEnd: 54.247656,
+		};
+
+		if (this.bet.area === 0) {
+			let randPoint = {
+				lat:
+					WARSAW_CORDS.latStart +
+					Math.random() *
+						(WARSAW_CORDS.latEnd - WARSAW_CORDS.latStart),
+				lon:
+					WARSAW_CORDS.lonStart +
+					Math.random() *
+						(WARSAW_CORDS.lonEnd - WARSAW_CORDS.lonStart),
+			};
+
+			this.map.flyTo({
+				center: [randPoint.lon, randPoint.lat],
+				zoom: 10,
+			});
+		} else {
+			let randPoint = {
+				lat:
+					POLAND_CORDS.latStart +
+					Math.random() *
+						(POLAND_CORDS.latEnd - POLAND_CORDS.latStart),
+				lon:
+					POLAND_CORDS.lonStart +
+					Math.random() *
+						(POLAND_CORDS.lonEnd - POLAND_CORDS.lonStart),
+			};
+
+			this.map.flyTo({
+				center: [randPoint.lon, randPoint.lat],
+				zoom: 10,
+			});
+		}
 	}
 }
