@@ -61,7 +61,10 @@ export class BetBuyComponent implements OnInit {
 		this.paid = true;
 
 		const data: any = await this.http
-			.post('https://lotto-geo.herokuapp.com/bet', this.bet.mapToApi())
+			.post(
+				'https://lotto-geo.herokuapp.com/bet',
+				this.bet.mapToApi(this.betStoreService.getUserId())
+			)
 			.toPromise();
 
 		setTimeout(() => {

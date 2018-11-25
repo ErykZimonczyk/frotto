@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MapComponent } from './map/map.component';
 import { BetBuyComponent } from './bet-buy/bet-buy.component';
 import { BetConfirmationComponent } from './bet-confirmation/bet-confirmation.component';
+import { WinnersComponent } from './winners/winners.component';
 import {
 	trigger,
 	animate,
@@ -29,6 +30,11 @@ const routes: Routes = [
 		path: 'bet/confirm',
 		component: BetConfirmationComponent,
 		data: { state: 'confirm', disableMenu: true },
+	},
+	{
+		path: 'winners',
+		component: WinnersComponent,
+		data: { state: 'winners' },
 	},
 ];
 
