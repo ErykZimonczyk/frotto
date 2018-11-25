@@ -30,6 +30,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
 	betsUrl = 'https://lotto-geo.herokuapp.com/bets';
 
+	userId;
 	progress;
 	geoBets: FeatureCollection = {
 		type: 'FeatureCollection',
@@ -59,6 +60,7 @@ export class MapComponent implements OnInit, OnDestroy {
 		this.bet =
 			this.betStoreService.getCurrentBet() ||
 			new Bet(this.center[0], this.center[1], 1, 0, 0);
+		this.userId = this.betStoreService.getUserId();
 
 		if (this.refId) {
 			this.bet.friendBetId = this.refId;
@@ -137,7 +139,7 @@ export class MapComponent implements OnInit, OnDestroy {
 					rangeFactor: bet.rangeFactor,
 				},
 			};
-			if (bet.userId === 1) {
+			if (bet.userId === this.userId) {
 				userPoints.push(point);
 			} else {
 				geoPoints.push(point);
