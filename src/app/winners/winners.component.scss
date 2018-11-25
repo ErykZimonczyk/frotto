@@ -5,53 +5,83 @@ mgl-map {
 
 .picker-container {
     position: absolute;
-     text-transform: uppercase;
+    text-transform: uppercase;
     background: transparent;
     width: 100%;
-    top: 85%;
-    height: 50px;
-     font-family: 'Hind Siliguri', sans-serif;
-     padding: 0 20px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     .container {
-         display: flex;
-         padding-top: 20px;
-         align-items: center;
-         justify-content: center;
-         position: relative;
-         width: 340px;
-         height: 120px;
-         background: white;
-         box-shadow: 1px 1px 9px #0000004d;
-         border: 0px solid black;
-         border-radius: 20px;
-         .vovoideship-container, .country-container {
-             margin: 5px;
-             position: relative;
-             transition: transform 1s;
-             opacity: 0.6;
-             &.chosen {
-                 transform: scale(1.2);
-             }
-             width: 48%;
-             height: 80%;
-             display: flex;
-             justify-content: center;
-             align-items: center;
-             flex-direction: column;
-             .image {
-                 width: 35%;
-             }
-         }
-         .separator {
-             position: relative;
-             background: black;
-             border: 1px solid black;
-             border-radius: 25%;
-             width: 2px;
-             height: 50%;
-         }
-     }
- }
+    bottom: 30px;
+
+    font-family: 'Hind Siliguri', sans-serif;
+    padding: 0 20px;
+    .container {
+      position: relative;
+      height: 120px;
+      background: white;
+      box-shadow: 1px 1px 9px #0000004d;
+      border: 0px solid black;
+      border-radius: 20px;
+      .select-container {
+        padding-top: 10px;
+        .split-container {
+          opacity: 0.4;
+          width: 50%;
+          height: 95px;
+          float: left;
+          padding-top: 10px;
+          &.chosen {
+            transition: all 0.2s linear;
+            opacity: 1;
+            .progress {
+              height: 60px;
+            }
+          }
+          h5 {
+            font-family: 'Hind Siliguri', sans-serif;
+
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            text-align: center;
+          }
+
+          .img-ctn {
+            position: relative;
+            text-align: center;
+            width: 100%;
+            height: 60px;
+          }
+
+          .image {
+            position: relative;
+            z-index: 2;
+            height: 60px;
+          }
+
+          .progress {
+            transition: all 0.2s linear;
+            &.left {
+              width: 42px;
+              margin-left: -21px;
+            }
+            &.right {
+              width: 60px;
+              margin-left: -30px;
+            }
+            left: 50%;
+            position: absolute;
+            bottom: 0;
+            height: 0;
+            background: #f7c162;
+          }
+        }
+        .separator {
+          position: relative;
+          background: black;
+          border: 1px solid black;
+          border-radius: 25%;
+          width: 2px;
+          height: 50%;
+        }
+
+      }
+    }
+  }

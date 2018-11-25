@@ -69,16 +69,16 @@ $color-gray-dark: #4f4d4b;
 
 		.win-amount {
 			font-size: 25pt;
-			margin-top: 45px;
+			height: 120px;
+			width: 120px;
+			margin: 10px auto;
+			background: #f7c162;
+			display: flex;
+			border-radius: 100%;
+			align-items: center;
+			justify-content: center;
 
 			.circle {
-				height: 40px;
-				width: 47px;
-				background: #f7c162;
-				border-radius: 100%;
-				padding: 30px 12px;
-				position: relative;
-
 				&::after {
 					content: 'zł';
 					font-size: 9pt;

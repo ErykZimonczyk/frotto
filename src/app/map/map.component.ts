@@ -30,6 +30,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
 	betsUrl = 'https://lotto-geo.herokuapp.com/bets';
 
+	userId;
 	progress;
 	winningPool: number = 2;
 	maximumPool: number = 200000;
@@ -61,6 +62,7 @@ export class MapComponent implements OnInit, OnDestroy {
 		this.bet =
 			this.betStoreService.getCurrentBet() ||
 			new Bet(this.center[0], this.center[1], 1, 0, 0);
+		this.userId = this.betStoreService.getUserId();
 
 		if (this.refId) {
 			this.bet.friendBetId = this.refId;
@@ -121,9 +123,9 @@ export class MapComponent implements OnInit, OnDestroy {
 					}
 					localStorage.setItem('lastResult', result.id);
 				});
-        if (wins) {
-          this.notifyMe(wins);
-        }
+				if (wins) {
+					this.notifyMe(wins);
+				}
 			}
 		}
 
@@ -139,7 +141,7 @@ export class MapComponent implements OnInit, OnDestroy {
 					rangeFactor: bet.rangeFactor,
 				},
 			};
-			if (bet.userId === 1) {
+			if (bet.userId === this.userId) {
 				userPoints.push(point);
 			} else {
 				geoPoints.push(point);
@@ -153,14 +155,15 @@ export class MapComponent implements OnInit, OnDestroy {
 	getChosenClass(area) {
 		return this.bet.area === area ? 'chosen' : '';
 	}
-	COUNTRY_FINAL_PRIZE = 200000
-	VOIVODESHIP_FINAL_PRIZE = 20000
+	COUNTRY_FINAL_PRIZE = 200000;
+	VOIVODESHIP_FINAL_PRIZE = 5000;
 	setWinningPool(area) {
 		const { voivodeship, country } = this.progress;
-		const pool = area === 1 
-			? country * this.COUNTRY_FINAL_PRIZE
-			: voivodeship * this.VOIVODESHIP_FINAL_PRIZE;
-		this.winningPool =  Math.floor(pool);
+		const pool =
+			area === 1
+				? country * this.COUNTRY_FINAL_PRIZE
+				: voivodeship * this.VOIVODESHIP_FINAL_PRIZE;
+		this.winningPool = Math.floor(pool);
 	}
 
 	setMaximumPool(area) {
