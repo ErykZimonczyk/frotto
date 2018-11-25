@@ -1,0 +1,93 @@
+$color-gray-dark: #4f4d4b;
+
+.bet-list {
+	margin-top: 15px;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 15px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+
+	.bet-detail {
+		flex: 300px 0 1;
+		box-shadow: 1px 1px 9px #0000004d;
+		background: white;
+		margin: 10px;
+		padding: 10px;
+
+		h2 {
+			color: $color-gray-dark;
+			font-size: 14pt;
+			text-align: center;
+			font-family: 'Hind Siliguri', sans-serif;
+			font-weight: 100;
+			border-bottom: 1px solid #f7c162;
+			padding: 20px 0;
+			margin: 0 auto 20px;
+			max-width: 600px;
+		}
+
+		.row {
+			margin: 15px auto;
+			display: flex;
+			font-family: 'Hind Siliguri', sans-serif;
+			align-items: center;
+			max-width: 400px;
+
+			&.padding {
+				padding-bottom: 130px;
+			}
+
+			&.row-group {
+				flex-direction: column;
+
+				align-items: flex-start;
+				max-width: 400px;
+
+				.row {
+					align-items: center;
+					margin: 5px 0;
+				}
+			}
+
+			&.last {
+				padding-bottom: 20px;
+				border-bottom: 1px solid #f7c162;
+			}
+
+			.label,
+			.value {
+				flex: 1;
+				font-weight: 100;
+				vertical-align: middle;
+			}
+
+			.group-label {
+				color: $color-gray-dark;
+				flex: 1;
+				font-size: 10pt;
+			}
+
+			.group {
+				min-width: 100%;
+				flex: 1;
+
+				.label {
+					padding-left: 10px;
+					margin-right: -10px;
+				}
+			}
+
+			.label {
+				color: $color-gray-dark;
+				font-size: 10pt;
+			}
+
+			.value {
+				color: black;
+				font-size: 12pt;
+			}
+		}
+	}
+}

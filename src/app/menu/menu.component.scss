@@ -5,6 +5,7 @@
 	top: 20px;
 	left: 15px;
 	z-index: 4;
+	cursor: pointer;
 	img {
 		display: block;
 		height: 100%;
@@ -61,6 +62,7 @@ nav {
 		li {
 			padding: 15px;
 			border-bottom: 1px solid #f0efea;
+			cursor: pointer;
 
 			&.active {
 				background: #f0efea;

@@ -21,12 +21,16 @@
 	</div>
 	<div class="row">
 		<span class="label">Mnożnik</span
-		><span class="value">x{{ bet.distanceFactor }}</span>
+		><span class="value">x{{ bet.distanceFactor / 100.0 }}</span>
 	</div>
 	<div class="row last">
 		<span class="label">Max. kwota wygranej</span
 		><span class="value"
-			>{{ (bet.distanceFactor * maxPrize[bet.area]) | currency: "PLN" : "" }} zł</span
+			>{{
+				(bet.distanceFactor * maxPrize[bet.area]) / 100.0
+					| currency: 'PLN':''
+			}}
+			zł</span
 		>
 	</div>
 	<div class="row padding">

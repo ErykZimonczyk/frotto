@@ -1,3 +1,36 @@
-<p>
-  bets-current works!
-</p>
+<h1>Moje Zakłady</h1>
+<div class="bet-list">
+	<div *ngFor="let bet of bets" class="bet-detail">
+		<h2>Zakład {{ betTypes[bet.type] }}</h2>
+		<div class="row">
+			<span class="label">Typ zakładu</span
+			><span class="value">{{ bet.getTypeLabel() }}</span>
+		</div>
+		<div class="row row-group">
+			<span class="group-label">Współrzędne</span>
+			<span class="group">
+				<span class="row">
+					<span class="label">szerokość</span>
+					<span class="value">{{ bet.getLat() }}°</span>
+				</span>
+				<span class="row"
+					><span class="label">długość</span>
+					<span class="value">{{ bet.getLng() }}°</span></span
+				>
+			</span>
+		</div>
+		<div class="row">
+			<span class="label">Mnożnik</span
+			><span class="value">x{{ bet.distanceFactor }}</span>
+		</div>
+		<div class="row last">
+			<span class="label">Max. kwota wygranej</span
+			><span class="value"
+				>{{
+					bet.distanceFactor * maxPrize[bet.area] | currency: 'PLN':''
+				}}
+				zł</span
+			>
+		</div>
+	</div>
+</div>
