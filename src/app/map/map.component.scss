@@ -72,7 +72,10 @@ mgl-map {
       clear: both;
       text-align: center;
       color: #CDCDCD;
-      padding-top: 4px;
+		padding-top: 4px;
+		.prize {
+			color: rgb(156, 156, 156)
+		}
 
     }
     .select-container {
