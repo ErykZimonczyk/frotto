@@ -33,6 +33,7 @@ export class MapComponent implements OnInit, OnDestroy {
 	userId;
 	progress;
 	winningPool: number = 2;
+	maximumPool: number = 200000;
 	geoBets: FeatureCollection = {
 		type: 'FeatureCollection',
 		features: [],
@@ -165,9 +166,14 @@ export class MapComponent implements OnInit, OnDestroy {
 		this.winningPool = Math.floor(pool);
 	}
 
+	setMaximumPool(area) {
+		this.maximumPool = area === 1 ? this.COUNTRY_FINAL_PRIZE : this.VOIVODESHIP_FINAL_PRIZE;
+	}
+
 	chooseArea(area) {
 		this.bet.area = area;
 		this.setWinningPool(area);
+		this.setMaximumPool(area);
 	}
 
 	updateData() {
